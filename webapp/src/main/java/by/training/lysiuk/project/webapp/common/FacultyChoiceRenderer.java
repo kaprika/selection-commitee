@@ -15,16 +15,12 @@ public class FacultyChoiceRenderer extends ChoiceRenderer<Faculty> {
 
 	@Override
 	public Object getDisplayValue(Faculty object) {
-		return null;//object.getName();
+		return object.getName();
 	}
 
 	@Override
 	public String getIdValue(Faculty object, int index) {
-		return null;//String.valueOf(object.getId());
+		return String.valueOf(object.getId());
 	}
-	
-	@Override
-	public Faculty getObject(String id, IModel choices) {
-		return null;
-	}
+
 }
