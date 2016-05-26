@@ -1,0 +1,54 @@
+<wicket:extend xmlns:wicket="http://wicket.apache.org">
+	<h2>PlanSet edit</h2>
+
+	<form wicket:id="form">
+
+		<table>
+			<tr>
+				<td><b>Year:</b></td>
+				<td><input type="text" wicket:id="year" /></td>
+			</tr>
+			
+			<tr>
+				<td><b>Faculty:</b></td>
+				<td><select wicket:id="name"></select></td>
+				
+	<!-- 			<td><input type="text" wicket:id="faculty.getName()" /></td>
+	-->
+			</tr>
+		
+			<tr>
+				<td><b>Plan:</b></td>
+				<td><input type="text" wicket:id="plan" /></td>
+			</tr>
+			<!-- 
+			<tr>
+				<td><b>End date set:</b></td>
+				<td><input type="text" wicket:id="endDateSet" /></td>
+			</tr>
+	
+			<tr>
+				<td><b>Subject 1:</b></td>
+				<td><input type="text"
+					wicket:id="first subject" /></td>
+			</tr>
+		 	<tr>
+				<td><b>Subject 2:</b></td>
+				<td><input type="text" wicket:id="second subject" /></td>
+			</tr>
+			<tr>
+				<td><b>Subject 3:</b></td>
+				<td><input type="text" wicket:id="third subject" /></td>
+			</tr>
+			-->
+			<tr>
+				<td><button type="submit" wicket:id="save">SAVE</button></td>
+				<td></td>
+			</tr>
+		</table>
+	</form>
+
+	<button type="submit" wicket:id="cancel">CANCEL</button>
+	<div wicket:id="feedback"></div>
+
+</wicket:extend>
