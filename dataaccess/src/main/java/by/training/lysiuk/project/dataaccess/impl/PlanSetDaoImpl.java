@@ -56,4 +56,5 @@ public class PlanSetDaoImpl extends AbstractDaoImpl<PlanSet, Long> implements Pl
 		setPaging(filter, q);
 		return q.getResultList();
 	}
+
 }

@@ -2,12 +2,24 @@ package by.training.lysiuk.project.dataaccess.filters;
 
 import java.util.Date;
 
+import by.training.lysiuk.project.datamodel.Faculty;
+
 public class PlanSetFilter extends AbstractFilter {
 
 	private Date year;
 
+	private String facultyName;
+
+	public String getFacultyName() {
+		return facultyName;
+	}
+
+	public void setFacultyName(String facultyName) {
+		this.facultyName = facultyName;
+	}
+
 	private boolean isFetchFaculty;
-	
+
 	private boolean isFetchSubjects;
 
 	public boolean isFetchSubjects() {

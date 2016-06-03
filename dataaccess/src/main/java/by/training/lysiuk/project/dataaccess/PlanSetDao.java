@@ -10,4 +10,5 @@ public interface PlanSetDao extends AbstractDao<PlanSet, Long> {
 	Long count(PlanSetFilter filter);
 
 	List<PlanSet> find(PlanSetFilter filter);
+	
 }

@@ -1,0 +1,85 @@
+
+<wicket:extend>
+	<h2>RegistrationPage</h2>
+
+	<form wicket:id="form">
+
+		<table>
+			<tr>
+				<td><b>Last name:</b></td>
+				<td><input type="text" wicket:id="lastName" /></td>
+			</tr>
+			<tr>
+				<td><b>First name:</b></td>
+				<td><input type="text" wicket:id="firstName" /></td>
+			</tr>
+			<tr>
+				<td><b>Identification number:</b></td>
+				<td><input type="text" wicket:id="identificationNumber" /></td>
+			</tr>
+			<tr>
+				<td><b>Phone number:</b></td>
+				<td><input type="text" wicket:id="phoneNumber" /></td>
+			</tr>
+			<tr>
+				<td><b>email:</b></td>
+				<td><input type="text" wicket:id="email" /></td>
+			</tr>
+			<tr>
+				<td><b>Certificate:</b></td>
+				<td><input type="text" wicket:id="certificate" /></td>
+			</tr>
+			<tr>
+				<td><b>PlanSet:</b></td>
+				<td><select wicket:id="planSet"></select></td>
+			</tr>
+			<tr>
+				<td><span wicket:id="subject1"></span></td>
+				<td><input type="text" wicket:id="first points" /></td>
+			</tr>
+			<tr>
+				<td><span wicket:id="subject2"></span></td>
+				<td><input type="text" wicket:id="second points" /></td>
+			</tr>
+			<tr>
+				<td><span wicket:id="subject3"></span></td>
+				<td><input type="text" wicket:id="third points" /></td>
+			</tr>
+
+			<!-- 	<tr>
+				<td><b>Subject 2:</b></td>
+				<td><input type="text" wicket:id="second subject" /></td>
+			</tr>
+			<tr>
+				<td><b>Subject 3:</b></td>
+				<td><input type="text" wicket:id="third subject" /></td>
+			</tr>
+			-->
+			<tr>
+				<td></td>
+				<!-- 
+				 	<td><input type="text"
+					wicket:id="scoresInSubjects.0.getSubject().getName()" /></td>
+				-->
+				<td></td>
+			</tr>
+			<tr>
+				<td><button type="button" wicket:id="continue">CONTINUE</button></td>
+				<td></td>
+			</tr>
+
+			<tr>
+				<td><button type="submit" wicket:id="save">SAVE</button></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><button type="button" wicket:id="cancel">CANCEL</button></td>
+				<td></td>
+			</tr>
+
+		</table>
+	</form>
+
+	<div wicket:id="feedback"></div>
+
+</wicket:extend>

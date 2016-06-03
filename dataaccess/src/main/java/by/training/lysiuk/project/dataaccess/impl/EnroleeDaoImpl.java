@@ -40,7 +40,6 @@ public class EnroleeDaoImpl extends AbstractDaoImpl<Enrolee, Long> implements En
 		CriteriaQuery<Enrolee> cq = cb.createQuery(Enrolee.class);
 		Root<Enrolee> from = cq.from(Enrolee.class);
 		cq.select(from);
-		// set sort params
 
 		if (filter.getSortProperty() != null) {
 			cq.orderBy(new OrderImpl(from.get(filter.getSortProperty()), filter.isSortOrder()));

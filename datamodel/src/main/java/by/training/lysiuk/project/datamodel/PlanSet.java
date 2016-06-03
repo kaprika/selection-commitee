@@ -1,7 +1,9 @@
 package by.training.lysiuk.project.datamodel;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,7 +16,7 @@ import javax.persistence.ManyToOne;
 public class PlanSet extends AbstractModel {
 
 	@Column
-	private Date year;
+	private Date startDateSet;
 
 	@Column
 	private Date endDateSet;
@@ -28,14 +30,14 @@ public class PlanSet extends AbstractModel {
 	@JoinTable(name = "faculty_subject_on_years", joinColumns = {
 			@JoinColumn(name = "plan_set_id") }, inverseJoinColumns = { @JoinColumn(name = "subject_id") })
 	@ManyToMany(targetEntity = Subject.class, fetch = FetchType.LAZY)
-	private List<Subject> subjects;
+	private List<Subject> subjects = new ArrayList<Subject>();
 
-	public Date getYear() {
-		return year;
+	public Date getStartDateSet() {
+		return startDateSet;
 	}
 
-	public void setYear(Date year) {
-		this.year = year;
+	public void setStartDateSet(Date startDateSet) {
+		this.startDateSet = startDateSet;
 	}
 
 	public Date getEndDateSet() {
@@ -66,8 +68,8 @@ public class PlanSet extends AbstractModel {
 		return subjects;
 	}
 
-	public void setSubjects(List<Subject> subject) {
-		this.subjects = subject;
+	public void setSubjects(List<Subject> subjects) {
+		this.subjects = subjects;
 	}
 
 }

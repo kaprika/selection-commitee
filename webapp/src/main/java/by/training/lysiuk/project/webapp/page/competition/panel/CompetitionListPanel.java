@@ -1,4 +1,4 @@
-package by.training.lysiuk.project.webapp.page.plan.panel;
+package by.training.lysiuk.project.webapp.page.competition.panel;
 
 import java.io.Serializable;
 import java.util.Iterator;
@@ -27,12 +27,12 @@ import by.training.lysiuk.project.service.PlanSetService;
 import by.training.lysiuk.project.webapp.page.plan.PlanSetEditPage;
 import by.training.lysiuk.project.webapp.page.plan.PlanSetPage;
 
-public class PlanSetListPanel extends Panel {
+public class CompetitionListPanel extends Panel {
 
 	@Inject
 	private PlanSetService planSetService;
 
-	public PlanSetListPanel(String id) {
+	public CompetitionListPanel(String id) {
 		super(id);
 
 		PlanSetDataProvider planSetDataProvider = new PlanSetDataProvider();

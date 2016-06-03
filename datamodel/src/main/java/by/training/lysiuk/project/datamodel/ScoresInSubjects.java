@@ -11,7 +11,7 @@ public class ScoresInSubjects extends AbstractModel {
 	@ManyToOne(targetEntity = Enrolee.class, fetch = FetchType.LAZY)
 	private Enrolee enrolee;
 
-	@ManyToOne(targetEntity = ScoresInSubjects.class, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = Subject.class, fetch = FetchType.LAZY)
 	private Subject subject;
 
 	@Column

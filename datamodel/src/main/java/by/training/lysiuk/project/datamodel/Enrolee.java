@@ -1,16 +1,12 @@
 package by.training.lysiuk.project.datamodel;
 
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 @Entity
 public class Enrolee extends AbstractModel {
@@ -27,27 +23,37 @@ public class Enrolee extends AbstractModel {
 	@Column
 	private Date dateOfRegistration;
 
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
 	@Column
 	private String identificationNumber;
 
-	// TODO improve/fix if possible
-	@MapsId
-	@OneToOne(fetch = FetchType.LAZY, optional = false, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinColumn(nullable = false, updatable = false, name = "id")
-	private Faculty faculty;
+	@ManyToOne(targetEntity = PlanSet.class, fetch = FetchType.LAZY)
+	private PlanSet planSet;
 
 	@Column
 	private Integer certificate;
 
-	@OneToMany(mappedBy = "enrolee", fetch = FetchType.LAZY)
-	private List<ScoresInSubjects> scoresInSubjects;
+	@Column
+	private String phoneNumber;
+	
+	@Transient
+	private Integer totalScore;
 
-	public List<ScoresInSubjects> getScoresInSubjects() {
-		return scoresInSubjects;
+	@Transient
+	public Integer getTotalScore() {
+		return totalScore;
 	}
 
-	public void setScoresInSubjects(List<ScoresInSubjects> scoresInSubjects) {
-		this.scoresInSubjects = scoresInSubjects;
+	@Transient
+	public void setTotalScore(Integer totalScore) {
+		this.totalScore = totalScore;
 	}
 
 	public String getFirstName() {
@@ -82,12 +88,12 @@ public class Enrolee extends AbstractModel {
 		this.dateOfRegistration = dateOfRegistration;
 	}
 
-	public Faculty getFaculty() {
-		return faculty;
+	public PlanSet getPlanSet() {
+		return planSet;
 	}
 
-	public void setFaculty(Faculty faculty) {
-		this.faculty = faculty;
+	public void setPlanSet(PlanSet planSet) {
+		this.planSet = planSet;
 	}
 
 	public Integer getCertificate() {

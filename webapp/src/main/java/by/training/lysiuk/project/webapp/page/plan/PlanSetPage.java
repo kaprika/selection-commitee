@@ -14,7 +14,7 @@ public class PlanSetPage extends AbstractPage {
 		add(new Link("create") {
 			@Override
 			public void onClick() {
-				setResponsePage(new PlanSetEditPage(new PlanSet()));
+				setResponsePage(new PlanSetEditPage(new PlanSet(), true));
 			}
 		});
 	}

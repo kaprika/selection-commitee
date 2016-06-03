@@ -7,7 +7,7 @@ import by.training.lysiuk.project.datamodel.Enrolee;
 import by.training.lysiuk.project.webapp.page.competition.CompetitionPage;
 import by.training.lysiuk.project.webapp.page.faculties.FacultiesPage;
 import by.training.lysiuk.project.webapp.page.plan.PlanSetPage;
-import by.training.lysiuk.project.webapp.page.signup.RegistrationPage;
+import by.training.lysiuk.project.webapp.page.registration.RegistrationPage;
 import by.training.lysiuk.project.webapp.page.subjects.SubjectsPage;
 
 public class MenuPanel extends Panel {
@@ -55,6 +55,8 @@ public class MenuPanel extends Panel {
 				setResponsePage(new RegistrationPage(new Enrolee()));
 			}
 		});
+		
+
 
 	}
 }

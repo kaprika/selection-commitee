@@ -1,6 +1,7 @@
 package by.training.lysiuk.project.service;
 
 import java.lang.reflect.Field;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -42,6 +43,13 @@ public class PlanSetServiceTest {
 	}
 
 	@Test
+	public void testCountByYearAndFaculty() {
+		Date date = new Date();
+		Long count = planSetService.countByYearAndFaculty(date, "math");
+		System.out.println(count);
+	}
+
+	@Test
 	public void testSearch() {
 
 		PlanSetFilter filter = new PlanSetFilter();
@@ -51,26 +59,9 @@ public class PlanSetServiceTest {
 		for (PlanSet p : result) {
 			if (!p.getSubjects().isEmpty()) {
 				System.out.println(p.getFaculty().getName() + " " + p.getSubjects().get(0).getName() + " "
-						+ p.getSubjects().get(1).getName() +" " +p.getSubjects().size());
+						+ p.getSubjects().get(1).getName() + " " + p.getSubjects().size());
 			}
 		}
-		// Assert.assertEquals(testObjectsCount, result.size());
-		// // test paging
-		// filter.setFetchCredentials(true);
-		// int limit = 3;
-		// filter.setLimit(limit);
-		// filter.setOffset(0);
-		// result = userService.find(filter);
-		// Assert.assertEquals(limit, result.size());
-		//
-		// // test sort
-		//
-		// filter.setLimit(null);
-		// filter.setOffset(null);
-		// filter.setSortOrder(true);
-		// filter.setSortProperty(UserProfile_.firstName);
-		// result = userService.find(filter);
-		// Assert.assertEquals(testObjectsCount, result.size());
-
 	}
+
 }

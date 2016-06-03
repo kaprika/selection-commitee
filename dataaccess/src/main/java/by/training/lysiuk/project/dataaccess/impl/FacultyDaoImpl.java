@@ -40,7 +40,6 @@ public class FacultyDaoImpl extends AbstractDaoImpl<Faculty, Long> implements Fa
 	        CriteriaQuery<Faculty> cq = cb.createQuery(Faculty.class);
 	        Root<Faculty> from = cq.from(Faculty.class);
 	        cq.select(from);
-	        // set sort params
 
 	        if (filter.getSortProperty() != null) {
 	            cq.orderBy(new OrderImpl(from.get(filter.getSortProperty()), filter.isSortOrder()));

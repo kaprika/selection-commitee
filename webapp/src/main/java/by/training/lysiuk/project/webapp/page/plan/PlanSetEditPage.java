@@ -1,8 +1,14 @@
 package by.training.lysiuk.project.webapp.page.plan;
 
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.wicket.extensions.markup.html.form.DateTextField;
+import org.apache.wicket.extensions.markup.html.form.palette.Palette;
+import org.apache.wicket.extensions.markup.html.form.palette.theme.DefaultTheme;
 import org.apache.wicket.extensions.yui.calendar.DatePicker;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
@@ -11,34 +17,47 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.model.util.CollectionModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.validation.IValidatable;
+import org.apache.wicket.validation.IValidator;
+import org.apache.wicket.validation.ValidationError;
 import org.apache.wicket.validation.validator.RangeValidator;
 
 import by.training.lysiuk.project.datamodel.Faculty;
 import by.training.lysiuk.project.datamodel.PlanSet;
+import by.training.lysiuk.project.datamodel.Subject;
 import by.training.lysiuk.project.service.FacultyService;
 import by.training.lysiuk.project.service.PlanSetService;
+import by.training.lysiuk.project.service.SubjectService;
 import by.training.lysiuk.project.webapp.common.FacultyChoiceRenderer;
+import by.training.lysiuk.project.webapp.common.SubjectChoiceRenderer;
 import by.training.lysiuk.project.webapp.page.AbstractPage;
 
 public class PlanSetEditPage extends AbstractPage {
 
 	@Inject
 	private PlanSetService planSetService;
-	
+
+	@Inject
+	private SubjectService subjectService;
+
 	@Inject
 	private FacultyService facultyService;
 
 	private PlanSet planSet;
 
+	private boolean createNew;
+
 	public PlanSetEditPage(PageParameters parameters) {
 		super(parameters);
 	}
 
-	public PlanSetEditPage(PlanSet planSet) {
+	public PlanSetEditPage(PlanSet planSet, boolean createNew) {
 		super();
 		this.planSet = planSet;
+		this.createNew = createNew;
 	}
 
 	@Override
@@ -48,61 +67,52 @@ public class PlanSetEditPage extends AbstractPage {
 		Form form = new Form("form", new CompoundPropertyModel<PlanSet>(planSet));
 		add(form);
 
-		DateTextField yearField = new DateTextField("year");
-		yearField.add(new DatePicker());
-		yearField.setRequired(true);
-		form.add(yearField);
-		
-       /* Faculty faculty = planSet.getFaculty();
-		TextField<String> facultyField = new TextField<>("faculty.getName()");
+		DateTextField startDateSetField = new DateTextField("startDateSet");
+		startDateSetField.add(new DatePicker());
+		startDateSetField.setRequired(true);
+		form.add(startDateSetField);
+
+		DropDownChoice<Faculty> facultyField = new DropDownChoice<Faculty>("faculty", facultyService.getAll(),
+				FacultyChoiceRenderer.INSTANCE);
 		facultyField.setRequired(true);
-		form.add(facultyField);*/
-		
-		Faculty faculty = planSet.getFaculty();
-		DropDownChoice<Faculty> facultyField = new DropDownChoice<Faculty>("name", new PropertyModel<Faculty>(faculty, "name"), facultyService.getAll(), FacultyChoiceRenderer.INSTANCE);
-        facultyField.setRequired(true);
-        form.add(facultyField);
+		form.add(facultyField);
 
 		TextField<Integer> planField = new TextField<>("plan");
-		planField.add(RangeValidator.<Integer> range(0, 1_000));
+		planField.add(RangeValidator.<Integer> range(1, 1_000));
 		planField.setRequired(true);
 		form.add(planField);
 
-//		DateTextField endDateSetField = new DateTextField("endDateSet");
-//		endDateSetField.add(new DatePicker());
-//		endDateSetField.setRequired(true);
-//		form.add(endDateSetField);
-//	
-//		Subject subject = planSet.getSubjects().get(0);
-//		TextField<String> firstSubjectField = new TextField<>("first subject", new PropertyModel<>(subject, "name"));
-//		firstSubjectField.setRequired(true);
-//		form.add(firstSubjectField);
-//		
-//        subject = planSet.getSubjects().get(1);
-//		TextField<String> secondSubjectField = new TextField<>("second subject",new PropertyModel<>(subject, "name"));
-//		secondSubjectField.setRequired(true);
-//		form.add(secondSubjectField);
-//		
-//		subject = planSet.getSubjects().get(2);
-//		TextField<String> thirdSubjectField = new TextField<>("third subject", new PropertyModel<>(subject, "name"));
-//		thirdSubjectField.setRequired(true);
-//		form.add(thirdSubjectField);
-		
-		/*
-		 * TextField<Double> basePriceField = new TextField<>("basePrice");
-		 * basePriceField.add(RangeValidator.<Double> range(0d, 1_000_000d));
-		 * basePriceField.setRequired(true); form.add(basePriceField);
-		 */
-//
-//		CheckBox activeField = new CheckBox("active");
-//		form.add(activeField);
+		DateTextField endDateSetField = new DateTextField("endDateSet");
+		endDateSetField.add(new DatePicker());
+		endDateSetField.setRequired(true);
+		form.add(endDateSetField);
+
+		List<Subject> allSubjects = subjectService.getAll();
+		final Palette<Subject> palette = new Palette<Subject>("subjects", Model.ofList(planSet.getSubjects()),
+				new CollectionModel<Subject>(allSubjects), SubjectChoiceRenderer.INSTANCE, 15, false, true);
+		palette.add(new DefaultTheme());
+		palette.setRequired(true);
+		palette.add(new SubjectsQuantityValidator());
+		form.add(palette);
 
 		form.add(new SubmitLink("save") {
 			@Override
 			public void onSubmit() {
 				super.onSubmit();
-				planSetService.saveOrUpdate(planSet);
-				setResponsePage(new PlanSetPage());
+				if (planSet.getStartDateSet().equals(planSet.getEndDateSet())
+						|| planSet.getStartDateSet().after(planSet.getEndDateSet())) {
+					setResponsePage(new PlanSetEditPage(planSet, createNew));
+				} else {
+					// проверять только год
+					Date datePlanSet = planSet.getStartDateSet();
+					String facultyPlanSet = planSet.getFaculty().getName();
+					if (planSetService.countByYearAndFaculty(datePlanSet, facultyPlanSet) != 0 && createNew) {
+						setResponsePage(new PlanSetEditPage(planSet, true));
+					} else {
+						planSetService.saveOrUpdate(planSet);
+						setResponsePage(new PlanSetPage());
+					}
+				}
 			}
 		});
 
@@ -117,17 +127,19 @@ public class PlanSetEditPage extends AbstractPage {
 		});
 
 	}
-	/*
-	 * private class UniqueNameValidator implements IValidator<String> {
-	 * 
-	 * @Override public void validate(IValidatable<String> validatable) {
-	 * 
-	 * Faculty faculty = facultyService.getByName(validatable.getValue()); if
-	 * (faculty != null) { ValidationError error = new ValidationError();
-	 * error.setMessage(getClass().getSimpleName() + " already exists");
-	 * validatable.error(error); } }
-	 * 
-	 * }
-	 */
+
+	private class SubjectsQuantityValidator implements IValidator<Collection<Subject>> {
+
+		@Override
+		public void validate(IValidatable<Collection<Subject>> validatable) {
+			int subjectsQuantity = validatable.getValue().size();
+			if (subjectsQuantity != 3) {
+				ValidationError error = new ValidationError();
+				error.setMessage(getClass().getSimpleName() + " select exactly three subjects");
+				validatable.error(error);
+			}
+		}
+
+	}
 
 }
