@@ -146,15 +146,16 @@ public class RegistrationPage extends AbstractPage {
 				String thirdSubjectName = scoresInSubjects.get(2).getSubject().getName();
 				thirdSubject.setDefaultModelObject(thirdSubjectName);
 				target.add(thirdSubject);
-			}
-		});
-
-		dropDownChoice.add(new AjaxEventBehavior("change") {
-			@Override
-			protected void onEvent(AjaxRequestTarget target) {
 				send(getPage(), Broadcast.BREADTH, new PlanSetChangeEvent());
 			}
 		});
+
+//		dropDownChoice.add(new AjaxEventBehavior("change") {
+//			@Override
+//			protected void onEvent(AjaxRequestTarget target) {
+//				send(getPage(), Broadcast.BREADTH, new PlanSetChangeEvent());
+//			}
+//		});
 
 		TextField<Integer> certificateField = new TextField<>("certificate");
 		certificateField.add(RangeValidator.<Integer> range(0, 100));
@@ -169,6 +170,7 @@ public class RegistrationPage extends AbstractPage {
 			public void onEvent(IEvent<?> event) {
 				if (event.getPayload() instanceof PlanSetChangeEvent) {
 					this.setVisible(true);
+				//	this.setEnabled(true);
 				
 					// counterModel.setObject(0);
 				}
@@ -178,7 +180,8 @@ public class RegistrationPage extends AbstractPage {
 		firstScoresField.setLabel(new ResourceModel("table.score1"));
 		firstScoresField.setRequired(true);
 		firstScoresField.setVisible(false);
-		//firstScoresField.setOutputMarkupPlaceholderTag(true);
+		firstScoresField.setOutputMarkupPlaceholderTag(true);
+		firstScoresField.setOutputMarkupId(true);
 		form.add(firstScoresField);
 
 		ScoresInSubjects secondPoints = scoresInSubjects.get(1);
