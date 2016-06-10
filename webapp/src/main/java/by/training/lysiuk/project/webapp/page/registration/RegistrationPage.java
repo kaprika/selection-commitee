@@ -169,7 +169,7 @@ public class RegistrationPage extends AbstractPage {
 			public void onEvent(IEvent<?> event) {
 				if (event.getPayload() instanceof PlanSetChangeEvent) {
 					this.setVisible(true);
-					this.setEnabled(false);
+				
 					// counterModel.setObject(0);
 				}
 			}
