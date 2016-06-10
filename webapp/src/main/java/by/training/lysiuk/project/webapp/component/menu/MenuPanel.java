@@ -4,11 +4,13 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 
 import by.training.lysiuk.project.datamodel.Enrolee;
+import by.training.lysiuk.project.webapp.app.AuthorizedSession;
 import by.training.lysiuk.project.webapp.page.competition.CompetitionPage;
-import by.training.lysiuk.project.webapp.page.faculties.FacultiesPage;
+import by.training.lysiuk.project.webapp.page.login.LoginPage;
+import by.training.lysiuk.project.webapp.page.plan.OpenPlanSetPage;
 import by.training.lysiuk.project.webapp.page.plan.PlanSetPage;
+import by.training.lysiuk.project.webapp.page.plan.PlanSetThisYearPage;
 import by.training.lysiuk.project.webapp.page.registration.RegistrationPage;
-import by.training.lysiuk.project.webapp.page.subjects.SubjectsPage;
 
 public class MenuPanel extends Panel {
 
@@ -21,24 +23,40 @@ public class MenuPanel extends Panel {
 	protected void onInitialize() {
 		super.onInitialize();
 
-		add(new Link("link-plan set") {
+		Link link = new Link("link-plans set this year") {
+			@Override
+			public void onClick() {
+				setResponsePage(new PlanSetThisYearPage());
+			}
+		};
+		link.setEnabled(false);
+		add(link);
+
+		add(new Link("link-all plans set this year") {
+			@Override
+			public void onClick() {
+				setResponsePage(new PlanSetThisYearPage());
+			}
+		});
+
+		add(new Link("link-open sets") {
+			@Override
+			public void onClick() {
+				setResponsePage(new OpenPlanSetPage());
+			}
+		});
+
+		add(new Link("link-enrolled students") {
 			@Override
 			public void onClick() {
 				setResponsePage(new PlanSetPage());
 			}
 		});
 
-		add(new Link("link-faculties") {
+		add(new Link("link-statistics") {
 			@Override
 			public void onClick() {
-				setResponsePage(new FacultiesPage());
-			}
-		});
-		
-		add(new Link("link-subjects") {
-			@Override
-			public void onClick() {
-				setResponsePage(new SubjectsPage());
+				setResponsePage(new PlanSetPage());
 			}
 		});
 
@@ -55,8 +73,15 @@ public class MenuPanel extends Panel {
 				setResponsePage(new RegistrationPage(new Enrolee()));
 			}
 		});
-		
 
+		Link linkLogin = new Link("link-login") {
+			@Override
+			public void onClick() {
+				setResponsePage(new LoginPage());
+			}
+		};
+		linkLogin.setVisible(!AuthorizedSession.get().isSignedIn());
+		add(linkLogin);
 
 	}
 }

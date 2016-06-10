@@ -1,0 +1,52 @@
+<wicket:panel>
+
+	<table>
+		<thead>
+			<tr>
+				<th><a wicket:id="sort-id">id</a></th>
+				<th><a wicket:id="sort-lname"><wicket:message
+							key="table.last name" /></a></th>
+				<th><a wicket:id="sort-fname"><wicket:message
+							key="table.first name" /></a></th>
+				<th><wicket:message key="table.email" /></th>
+				<th><a wicket:id="sort-registred"><wicket:message
+							key="table.date of registration" /></a></th>
+				<th><wicket:message key="table.identification number" /></th>
+				<th><wicket:message key="table.phone number" /></th>
+				<th><wicket:message key="table.faculty" /></th>
+				<th><wicket:message key="table.subject" /></th>
+				<th><wicket:message key="table.points" /></th>
+				<th><wicket:message key="table.subject" /></th>
+				<th><wicket:message key="table.points" /></th>
+				<th><wicket:message key="table.subject" /></th>
+				<th><wicket:message key="table.points" /></th>
+				<th><wicket:message key="table.certificate" /></th>
+				<th><wicket:message key="table.actions" /></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr wicket:id="rows">
+				<td><span wicket:id="id" /></td>
+				<td><span wicket:id="lname" /></td>
+				<td><span wicket:id="fname" /></td>
+				<td><span wicket:id="email" /></td>
+				<td><span wicket:id="registred" /></td>
+				<td><span wicket:id="identification number" /></td>
+				<td><span wicket:id="phone number" /></td>
+				<td><span wicket:id="faculty" /></td>
+				<td><span wicket:id="subject1" /></td>
+				<td><span wicket:id="points1" /></td>
+				<td><span wicket:id="subject2" /></td>
+				<td><span wicket:id="points2" /></td>
+				<td><span wicket:id="subject3" /></td>
+				<td><span wicket:id="points3" /></td>
+				<td><span wicket:id="certificate" /></td>
+				<td><a wicket:id="delete-link"><wicket:message key="table.delete"/></a>/<a
+					wicket:id="edit-link"><wicket:message key="table.edit"/></a></td>
+			</tr>
+		</tbody>
+	</table>
+	<div wicket:id="paging"></div>
+
+</wicket:panel>
+

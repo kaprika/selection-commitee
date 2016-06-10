@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="btn.create.product">Создать продукт</entry>
+
+	<entry key="menu.home">Домашняя</entry>
+	<entry key="menu.products">Продукты</entry>
+	<entry key="menu.attributes">Атрибуты</entry>
+	<entry key="menu.users">Пользователи</entry>
+
+
+	<entry key="loging.err.auth">ошибка авторизации</entry>
+
+	<entry key="product.saved">Продукт сохранен</entry>
+
+
+	<entry key="products.price">Базовая цена</entry>
+
+	<entry key="US">Английский</entry>
+	<entry key="RU">Русский</entry>
+
+	<entry key="products.basePrice.title">введите цену</entry>
+
+	<entry key="menu.plan set">План набора-2016</entry>
+	<entry key="menu.competition">Конкурс</entry>
+	<entry key="menu.plans set this year">Все факультеты</entry>
+	<entry key="menu.open plans set">Открытые наборы</entry>
+	<entry key="menu.register oneself">Зарегистрироваться</entry>
+	<entry key="menu.enrolled students">Зачисленные студенты</entry>
+	<entry key="menu.statistics">Статистика</entry>
+	<entry key="menu.login">Войти</entry>
+	<entry key="menu.logout">Выход</entry>
+	<entry key="menu.faculties">Факультеты</entry>
+	<entry key="menu.subjects">Предметы</entry>
+	<entry key="menu.enrollees">Абитуриенты</entry>
+	<entry key="menu.plans set">Планы наборов</entry>
+	<entry key="menu.this year plans set">Планы наборов текущего года</entry>
+	<entry key="menu.all plans set">Все планы наборов</entry>
+	<entry key="table.start date set">Дата начала набора</entry>
+	<entry key="table.end date set">Дата окончания набора</entry>
+	<entry key="table.faculty">Факультет</entry>
+	<entry key="table.subject1">Предмет-1</entry>
+	<entry key="table.subject2">Предмет-2</entry>
+	<entry key="table.subject3">Предмет-3</entry>
+	<entry key="table.plan">План набора (чел.)</entry>
+	<entry key="table.number of applications">Подано заявлений</entry>
+	<entry key="table.enrollees">Абитуриенты (количество баллов)</entry>
+	<entry key="table.last name">Фамилия</entry>
+	<entry key="table.first name">Имя</entry>
+	<entry key="table.identification number">Личный номер</entry>
+	<entry key="table.phone number">Номер телефона</entry>
+	<entry key="table.email">Email</entry>
+	<entry key="table.certificate">Аттестат</entry>
+	<entry key="table.score1">Баллы по предмету-1</entry>
+	<entry key="table.score2">Баллы по предмету-2</entry>
+	<entry key="table.score3">Баллы по предмету-3</entry>
+	<entry key="btn.save">Сохранить</entry>
+	<entry key="btn.cancel">Отмена</entry>
+	<entry key="table.actions">Действия</entry>
+	<entry key="table.delete">удалить</entry>
+	<entry key="table.edit">редактировать</entry>
+	<entry key="btn.faculty.create">Добавить факультет</entry>
+
+	<entry key="table.subject">Предмет</entry>
+	<entry key="btn.subject.create">Добавить предмет</entry>
+
+	<entry key="table.date of registration">Дата регистрации</entry>
+	
+	<entry key="table.points">Баллы</entry>
+	
+	<entry key="btn.add enrollee">Добавить абитуриента</entry>
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</properties>

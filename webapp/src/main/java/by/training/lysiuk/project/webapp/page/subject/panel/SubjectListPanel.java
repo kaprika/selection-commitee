@@ -35,7 +35,7 @@ public class SubjectListPanel extends Panel {
 		super(id);
 
 		SubjectsDataProvider subjectsDataProvider = new SubjectsDataProvider();
-		DataView<Subject> dataView = new DataView<Subject>("rows", subjectsDataProvider, 5) {
+		DataView<Subject> dataView = new DataView<Subject>("rows", subjectsDataProvider, 15) {
 			@Override
 			protected void populateItem(Item<Subject> item) {
 				Subject subject = item.getModelObject();

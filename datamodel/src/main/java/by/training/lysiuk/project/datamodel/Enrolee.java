@@ -42,7 +42,7 @@ public class Enrolee extends AbstractModel {
 
 	@Column
 	private String phoneNumber;
-	
+
 	@Transient
 	private Integer totalScore;
 
@@ -104,11 +104,11 @@ public class Enrolee extends AbstractModel {
 		this.certificate = certificate;
 	}
 
-	protected String getIdentificationNumber() {
+	public String getIdentificationNumber() {
 		return identificationNumber;
 	}
 
-	protected void setIdentificationNumber(String identificationNumber) {
+	public void setIdentificationNumber(String identificationNumber) {
 		this.identificationNumber = identificationNumber;
 	}
 

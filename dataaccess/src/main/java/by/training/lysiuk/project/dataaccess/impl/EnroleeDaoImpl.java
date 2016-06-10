@@ -6,14 +6,20 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Fetch;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.jpa.criteria.OrderImpl;
 import org.springframework.stereotype.Repository;
 
 import by.training.lysiuk.project.dataaccess.EnroleeDao;
-import by.training.lysiuk.project.dataaccess.filters.EnroleeFilter;
+import by.training.lysiuk.project.dataaccess.filters.EnrolleeFilter;
+import by.training.lysiuk.project.dataaccess.filters.PlanSetFilter;
 import by.training.lysiuk.project.datamodel.Enrolee;
+import by.training.lysiuk.project.datamodel.Enrolee_;
+import by.training.lysiuk.project.datamodel.PlanSet;
+import by.training.lysiuk.project.datamodel.PlanSet_;
 
 @Repository
 public class EnroleeDaoImpl extends AbstractDaoImpl<Enrolee, Long> implements EnroleeDao {
@@ -23,7 +29,7 @@ public class EnroleeDaoImpl extends AbstractDaoImpl<Enrolee, Long> implements En
 	}
 
 	@Override
-	public Long count(EnroleeFilter filter) {
+	public Long count(EnrolleeFilter filter) {
 		EntityManager em = getEntityManager();
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
@@ -34,12 +40,22 @@ public class EnroleeDaoImpl extends AbstractDaoImpl<Enrolee, Long> implements En
 	}
 
 	@Override
-	public List<Enrolee> find(EnroleeFilter filter) {
+	public List<Enrolee> find(EnrolleeFilter filter) {
 		EntityManager em = getEntityManager();
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Enrolee> cq = cb.createQuery(Enrolee.class);
 		Root<Enrolee> from = cq.from(Enrolee.class);
-		cq.select(from);
+
+		Fetch<Enrolee, PlanSet> fetchPlanSet = from.fetch(Enrolee_.planSet, JoinType.LEFT);
+		if (filter.isFetchSubjects()) {
+			fetchPlanSet.fetch(PlanSet_.subjects);
+		}
+
+		if (filter.isFetchFaculty()) {
+			fetchPlanSet.fetch(PlanSet_.faculty);
+		}
+
+		cq.select(from).distinct(true);
 
 		if (filter.getSortProperty() != null) {
 			cq.orderBy(new OrderImpl(from.get(filter.getSortProperty()), filter.isSortOrder()));
@@ -49,4 +65,5 @@ public class EnroleeDaoImpl extends AbstractDaoImpl<Enrolee, Long> implements En
 		setPaging(filter, q);
 		return q.getResultList();
 	}
+
 }

@@ -54,10 +54,22 @@ public class ScoresInSubjectsServiceTest {
 	public void getEnroleesListByDateAndFAcultyTest() {
 		Faculty faculty = new Faculty();
 		faculty.setName("math");
-		List<Enrolee> enrolees = scoresInSubjectsService.getEnroleesListByDateAndFAculty(faculty);
+		List<Enrolee> enrolees = scoresInSubjectsService.getEnroleesListByDateAndFaculty(faculty);
 		for (Enrolee enrolee : enrolees) {
 			System.out.println(enrolee.getLastName()+" " + enrolee.getId());
 		}
 	}
+	
+	@Test
+	public void getScoresInSubjectsByEnroleeTest() {
+		Enrolee enrolee = new Enrolee();
+		enrolee.setId((long) 1);
+		List<ScoresInSubjects> scoresInSubjects = scoresInSubjectsService.getScoresInSubjectsByEnrolee(enrolee);
+		for (ScoresInSubjects score : scoresInSubjects) {
+			System.out.println(score.getEnrolee().getLastName()+" " + score.getSubject().getName() + " " + score.getPoints());
+		}
+	}
+	
+	
 
 }

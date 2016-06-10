@@ -4,4 +4,6 @@ import by.training.lysiuk.project.datamodel.UserCredentials;
 
 public interface UserCredentialsDao extends AbstractDao<UserCredentials, Long> {
 
+    UserCredentials find(String userName, String password);
+
 }

@@ -35,7 +35,7 @@ public class FacultyListPanel extends Panel {
 		super(id);
 
 		FacultiesDataProvider facultiesDataProvider = new FacultiesDataProvider();
-		DataView<Faculty> dataView = new DataView<Faculty>("rows", facultiesDataProvider, 5) {
+		DataView<Faculty> dataView = new DataView<Faculty>("rows", facultiesDataProvider, 15) {
 			@Override
 			protected void populateItem(Item<Faculty> item) {
 				Faculty faculty = item.getModelObject();

@@ -1,6 +1,5 @@
 package by.training.lysiuk.project.service.impl;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -124,7 +123,7 @@ public class ScoresInSubjectsServiceImpl extends AbstractDaoImpl<ScoresInSubject
 	}
 
 	@Override
-	public List<Enrolee> getEnroleesListByDateAndFAculty(Faculty faculty) {
+	public List<Enrolee> getEnroleesListByDateAndFaculty(Faculty faculty) {
 		EntityManager em = getEntityManager();
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Enrolee> cq = cb.createQuery(Enrolee.class);
@@ -146,6 +145,25 @@ public class ScoresInSubjectsServiceImpl extends AbstractDaoImpl<ScoresInSubject
 				cb.and(startDateLessThanOrEqualCondition, endDateGreatThanOrEqualCondition, facultyEqualCondition)).distinct(true);
 		
 		TypedQuery<Enrolee> q = em.createQuery(cq);
+		return q.getResultList();
+	}
+
+	@Override
+	public List<ScoresInSubjects> getScoresInSubjectsByEnrolee(Enrolee enrolee) {
+		EntityManager em = getEntityManager();
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<ScoresInSubjects> cq = cb.createQuery(ScoresInSubjects.class);
+		Root<ScoresInSubjects> from = cq.from(ScoresInSubjects.class);
+		
+		from.fetch(ScoresInSubjects_.enrolee);
+		from.fetch(ScoresInSubjects_.subject);
+
+		Predicate enroleeEqualCondition = cb.equal(from.get(ScoresInSubjects_.enrolee).get(Enrolee_.id), enrolee.getId());
+		
+
+		cq.select(from).where(enroleeEqualCondition);
+		
+		TypedQuery<ScoresInSubjects> q = em.createQuery(cq);
 		return q.getResultList();
 	}
 

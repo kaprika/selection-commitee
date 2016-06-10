@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="btn.create.product">Create product</entry>
+
+	<entry key="menu.home">Home</entry>
+	<entry key="menu.products">Products</entry>
+	<entry key="menu.attributes">Attributes</entry>
+	<entry key="menu.users">Users</entry>
+
+
+	<entry key="loging.err.auth">authorization error</entry>
+
+	<entry key="product.saved">Product saved</entry>
+
+
+	<entry key="products.price">Base price</entry>
+
+	<entry key="US">English</entry>
+	<entry key="RU">Russian</entry>
+
+	<entry key="products.basePrice.title">enter price</entry>
+
+	<entry key="menu.plan set">Plan set-2016</entry>
+	<entry key="menu.competition">Competition</entry>
+	<entry key="menu.plans set this year">All faculties</entry>
+	<entry key="menu.open plans set">Open plans set</entry>
+	<entry key="menu.register oneself">Register oneself</entry>
+	<entry key="menu.enrolled students">Enrolled students</entry>
+	<entry key="menu.statistics">Statistics</entry>
+	<entry key="menu.login">Login</entry>
+	<entry key="menu.logout">Logout</entry>
+	<entry key="menu.faculties">Faculties</entry>
+	<entry key="menu.subjects">Subjects</entry>
+	<entry key="menu.enrollees">Enrollees</entry>
+	<entry key="menu.plans set">Plans set</entry>
+	<entry key="menu.this year plans set">Plans set of this year</entry>
+	<entry key="menu.all plans set">All plans set</entry>
+	<entry key="table.start date set">Start date set</entry>
+	<entry key="table.end date set">End date set</entry>
+	<entry key="table.faculty">Faculty</entry>
+	<entry key="table.subject1">Subject-1</entry>
+	<entry key="table.subject2">Subject-2</entry>
+	<entry key="table.subject3">Subject-3</entry>
+	<entry key="table.plan">Plan (stud.)</entry>
+	<entry key="table.number of applications">Number of applications</entry>
+	<entry key="table.enrollees">Enrollees (total score)</entry>
+	<entry key="table.last name">Last name</entry>
+	<entry key="table.first name">First name</entry>
+	<entry key="table.identification number">Identification number</entry>
+	<entry key="table.phone number">Phone number</entry>
+	<entry key="table.email">Email</entry>
+	<entry key="table.certificate">Certificate</entry>
+	<entry key="table.score1">Scores in subject-1</entry>
+	<entry key="table.score2">Scores in subject-2</entry>
+	<entry key="table.score3">Scores in subject-3</entry>
+	<entry key="btn.save">Save</entry>
+	<entry key="btn.cancel">Cancel</entry>
+	<entry key="table.actions">Actions</entry>
+	<entry key="table.delete">delete</entry>
+	<entry key="table.edit">edit</entry>
+	<entry key="btn.faculty.create">Add faculty</entry>
+
+	<entry key="table.subject">Subject</entry>
+	<entry key="btn.subject.create">Add subject</entry>
+
+	<entry key="table.date of registration">Date of registration</entry>
+
+	<entry key="table.points">Points</entry>
+
+	<entry key="btn.add enrollee">Add enrollee</entry>
+
+
+
+
+
+
+
+
+</properties>

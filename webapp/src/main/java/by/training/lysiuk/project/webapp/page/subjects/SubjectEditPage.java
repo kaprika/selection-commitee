@@ -8,6 +8,7 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.validation.IValidatable;
 import org.apache.wicket.validation.IValidator;
@@ -43,23 +44,11 @@ public class SubjectEditPage extends AbstractPage {
 		add(form);
 
 		TextField<String> nameField = new TextField<>("name");
+		nameField.setLabel(new ResourceModel("table.subject"));
 		nameField.setRequired(true);
 		nameField.add(new UniqueNameValidator());
 		form.add(nameField);
 
-		/*
-		 * TextField<Double> basePriceField = new TextField<>("basePrice");
-		 * basePriceField.add(RangeValidator.<Double> range(0d, 1_000_000d));
-		 * basePriceField.setRequired(true);
-		 * 
-		 * DateTextField createdField = new DateTextField("created");
-		 * createdField.add(new DatePicker()); createdField.setRequired(true);
-		 * form.add(createdField);
-		 * 
-		 * form.add(basePriceField);
-		 * 
-		 * CheckBox activeField = new CheckBox("active"); form.add(activeField);
-		 */
 		form.add(new SubmitLink("save") {
 			@Override
 			public void onSubmit() {

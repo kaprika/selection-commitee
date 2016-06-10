@@ -8,6 +8,7 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.validation.IValidatable;
 import org.apache.wicket.validation.IValidator;
@@ -41,6 +42,7 @@ public class FacultyEditPage extends AbstractPage {
 		add(form);
 
 		TextField<String> nameField = new TextField<>("name");
+		nameField.setLabel(new ResourceModel("table.faculty"));
 		nameField.setRequired(true);
 		nameField.add(new UniqueNameValidator());
 		form.add(nameField);

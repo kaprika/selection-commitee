@@ -5,28 +5,16 @@
 
 		<table>
 			<tr>
-				<td><b>Name:</b></td>
+				<td><b><wicket:message key="table.subject"/>:</b></td>
 				<td><input type="text" wicket:id="name" /></td>
 			</tr>
-			<!-- <tr>
-				<td><b>Base price:</b></td>
-				<td><input type="text" wicket:id="basePrice" /></td>
-			</tr>
 			<tr>
-				<td><b>Active:</b></td>
-				<td><input type="checkbox" wicket:id="active" /></td>
-			</tr>
-				<tr>
-				<td><b>Created:</b></td>
-				<td><input type="text" wicket:id="created" /></td>
-			</tr> -->
-			<tr>
-				<td><button type="submit" wicket:id="save">SAVE</button></td>
+				<td><button type="submit" wicket:id="save"><wicket:message key="btn.save"/></button></td>
 				<td></td>
 			</tr>
 		</table>
 	</form>
-	<button type="submit" wicket:id="cancel">CANCEL</button>
+	<button type="submit" wicket:id="cancel"><wicket:message key="btn.cancel"/></button>
 	<div wicket:id="feedback"></div>
 
 </wicket:extend>

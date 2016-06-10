@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import by.training.lysiuk.project.dataaccess.filters.EnroleeFilter;
+import by.training.lysiuk.project.dataaccess.filters.EnrolleeFilter;
 import by.training.lysiuk.project.datamodel.Enrolee;
 import by.training.lysiuk.project.datamodel.Faculty;
 import by.training.lysiuk.project.datamodel.PlanSet;
@@ -28,9 +28,9 @@ public interface EnroleeService {
 
 	List<Enrolee> getAll();
 
-	Long count(EnroleeFilter filter);
+	Long count(EnrolleeFilter filter);
 
-	List<Enrolee> find(EnroleeFilter filter);
+	List<Enrolee> find(EnrolleeFilter filter);
 
 	Long countByDateAndFaculty(Faculty faculty);
 

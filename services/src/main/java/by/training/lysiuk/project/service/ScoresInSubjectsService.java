@@ -19,12 +19,14 @@ public interface ScoresInSubjectsService {
 
 	@Transactional
 	void delete(ScoresInSubjects scoresInSubjects);
-	
+
 	List<ScoresInSubjects> getAll();
-	
+
 	List<ScoresInSubjects> getByDateAndFaculty(Faculty faculty);
 
 	List<Integer> getSumPointsByDateAndFaculty(Faculty faculty);
-	
-	List<Enrolee> getEnroleesListByDateAndFAculty(Faculty faculty);
+
+	List<Enrolee> getEnroleesListByDateAndFaculty(Faculty faculty);
+
+	List<ScoresInSubjects> getScoresInSubjectsByEnrolee(Enrolee enrolee);
 }

@@ -8,7 +8,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
@@ -18,7 +17,7 @@ import org.springframework.stereotype.Service;
 
 import by.training.lysiuk.project.dataaccess.EnroleeDao;
 import by.training.lysiuk.project.dataaccess.ScoresInSubjectsDao;
-import by.training.lysiuk.project.dataaccess.filters.EnroleeFilter;
+import by.training.lysiuk.project.dataaccess.filters.EnrolleeFilter;
 import by.training.lysiuk.project.dataaccess.impl.AbstractDaoImpl;
 import by.training.lysiuk.project.datamodel.Enrolee;
 import by.training.lysiuk.project.datamodel.Enrolee_;
@@ -27,7 +26,6 @@ import by.training.lysiuk.project.datamodel.Faculty_;
 import by.training.lysiuk.project.datamodel.PlanSet;
 import by.training.lysiuk.project.datamodel.PlanSet_;
 import by.training.lysiuk.project.datamodel.ScoresInSubjects;
-import by.training.lysiuk.project.datamodel.ScoresInSubjects_;
 import by.training.lysiuk.project.service.EnroleeService;
 
 @Service
@@ -68,12 +66,12 @@ public class EnroleeServiceImpl extends AbstractDaoImpl<Enrolee, Long> implement
 	}
 
 	@Override
-	public Long count(EnroleeFilter filter) {
+	public Long count(EnrolleeFilter filter) {
 		return dao.count(filter);
 	}
 
 	@Override
-	public List<Enrolee> find(EnroleeFilter filter) {
+	public List<Enrolee> find(EnrolleeFilter filter) {
 		return dao.find(filter);
 	}
 

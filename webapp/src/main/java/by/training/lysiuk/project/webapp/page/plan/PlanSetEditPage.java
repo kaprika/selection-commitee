@@ -31,8 +31,8 @@ import by.training.lysiuk.project.datamodel.Subject;
 import by.training.lysiuk.project.service.FacultyService;
 import by.training.lysiuk.project.service.PlanSetService;
 import by.training.lysiuk.project.service.SubjectService;
-import by.training.lysiuk.project.webapp.common.FacultyChoiceRenderer;
-import by.training.lysiuk.project.webapp.common.SubjectChoiceRenderer;
+import by.training.lysiuk.project.webapp.common.renderer.FacultyChoiceRenderer;
+import by.training.lysiuk.project.webapp.common.renderer.SubjectChoiceRenderer;
 import by.training.lysiuk.project.webapp.page.AbstractPage;
 
 public class PlanSetEditPage extends AbstractPage {

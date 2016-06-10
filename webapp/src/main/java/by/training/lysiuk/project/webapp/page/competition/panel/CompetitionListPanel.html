@@ -2,22 +2,27 @@
 	<table class="list-table">
 		<thead>
 			<tr>
-				<th><a wicket:id="sort-id">id</a></th>
-				<th><a wicket:id="sort-start date set">start date set</a></th>
-				<th><a wicket:id="sort-end date set">end date set</a></th>
+				<th><wicket:message key="table.faculty" /></th>
+				<th><wicket:message key="table.plan" /></th>
+				<th><wicket:message key="table.number of applications" /></th>
+				<th><wicket:message key="table.enrollees" /></th>
+			<!-- <th><a wicket:id="sort-end date set">end date set</a></th>
 				<th>faculty</th>
 				<th>subject 1</th>
 				<th>subject 2</th>
 				<th>subject 3</th>
 				<th><a wicket:id="sort-plan">plan</a></th>
 				<th>actions</th>
+				-->
 			</tr>
 		</thead>
 		<tbody>
 			<tr wicket:id="rows">
-				<td><span wicket:id="id" /></td>
-				<td><span wicket:id="start date set" /></td>
-				<td><span wicket:id="end date set" /></td>
+				<td><span wicket:id="faculty" /></td>
+				<td><span wicket:id="plan" /></td>
+				<td><span wicket:id="current amount" /></td>
+				<td><span wicket:id="list-enrolees" /></td>
+			<!-- 	<td><span wicket:id="end date set" /></td>
 				<td><span wicket:id="faculty" /></td>
 				<td><span wicket:id="first subject" /></td>
 				<td><span wicket:id="second subject" /></td>
@@ -25,9 +30,11 @@
 				<td><span wicket:id="plan" /></td>
 				<td><a wicket:id="delete-link">delete</a>/<a
 					wicket:id="edit-link">edit</a></td>
+					-->
 			</tr>
 		</tbody>
 	</table>
-	<div wicket:id="paging"></div>
+ 	<div wicket:id="paging"></div>
+
 
 </wicket:panel>
