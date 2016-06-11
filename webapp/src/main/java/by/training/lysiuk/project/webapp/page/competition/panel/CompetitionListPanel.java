@@ -1,12 +1,12 @@
 package by.training.lysiuk.project.webapp.page.competition.panel;
 
 import java.io.Serializable;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import org.apache.wicket.datetime.markup.html.basic.DateLabel;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
@@ -40,12 +40,6 @@ public class CompetitionListPanel extends Panel {
 				item.add(new Label("faculty", new PropertyModel<>(faculty, "name")));
 				String listEnrolees = "";
 				List<Enrolee> enrolees = competition.getEnrolees();
-				enrolees.sort(new Comparator<Enrolee>() {
-					@Override
-					public int compare(Enrolee a, Enrolee b) {
-						return -a.getTotalScore().compareTo(b.getTotalScore());
-					}
-				});
 				int i = 1;
 				for (Enrolee enrolee : enrolees) {
 					listEnrolees += i + " " + enrolee.getFirstName() + " " + enrolee.getLastName() + " ("
@@ -54,18 +48,19 @@ public class CompetitionListPanel extends Panel {
 				}
 
 				item.add(new Label("list-enrolees", listEnrolees).setEscapeModelStrings(false));
-				// item.add(DateLabel.forDatePattern("start date set",
-				// Model.of(planSet.getStartDateSet()), "dd-MM-yyyy"));
-				// item.add(DateLabel.forDatePattern("end date set",
-				// Model.of(planSet.getEndDateSet()), "dd-MM-yyyy"));
+				item.add(DateLabel.forDatePattern("start date", Model.of(competition.getStartDateSet()), "dd-MM-yyyy"));
+				item.add(DateLabel.forDatePattern("end date", Model.of(competition.getEndDateSet()), "dd-MM-yyyy"));
 				item.add(new Label("plan", competition.getPlan()));
 				item.add(new Label("current amount", competition.getCurrentAmount()));
+				item.add(new Label("competition", competition.getCompetition()));
+				item.add(new Label("passing score", competition.getPassingScore()));
+
 
 			}
 		};
 		add(dataView);
 		add(new PagingNavigator("paging", dataView));
-// добавить пагинацию
+		// добавить пагинацию
 		/*
 		 * add(new OrderByBorder("sort-id", PlanSet_.id, planSetDataProvider));
 		 * add(new OrderByBorder("sort-start date set", PlanSet_.startDateSet,

@@ -29,4 +29,7 @@ public interface ScoresInSubjectsService {
 	List<Enrolee> getEnroleesListByDateAndFaculty(Faculty faculty);
 
 	List<ScoresInSubjects> getScoresInSubjectsByEnrolee(Enrolee enrolee);
+
+	@Transactional
+	void deleteByEnrolleeId(Long id);
 }

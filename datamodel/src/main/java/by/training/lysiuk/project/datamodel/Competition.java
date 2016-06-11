@@ -1,12 +1,30 @@
 package by.training.lysiuk.project.datamodel;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
-import by.training.lysiuk.project.datamodel.Enrolee;
-import by.training.lysiuk.project.datamodel.Faculty;
-
 public class Competition implements Serializable {
+	
+	private Date startDateSet;
+	
+	private Date endDateSet;
+
+	public Date getStartDateSet() {
+		return startDateSet;
+	}
+
+	public void setStartDateSet(Date startDateSet) {
+		this.startDateSet = startDateSet;
+	}
+
+	public Date getEndDateSet() {
+		return endDateSet;
+	}
+
+	public void setEndDateSet(Date endDateSet) {
+		this.endDateSet = endDateSet;
+	}
 
 	private Faculty faculty;
 
@@ -14,11 +32,27 @@ public class Competition implements Serializable {
 
 	private Long currentAmount;
 
-	private Integer maxPoints;
-
-	private Integer minPoints;
-	
 	private List<Enrolee> enrolees;
+
+	private double competition;
+
+	private int passingScore;
+
+	public double getCompetition() {
+		return competition;
+	}
+
+	public void setCompetition(double competition) {
+		this.competition = competition;
+	}
+
+	public int getPassingScore() {
+		return passingScore;
+	}
+
+	public void setPassingScore(int passingScore) {
+		this.passingScore = passingScore;
+	}
 
 	public List<Enrolee> getEnrolees() {
 		return enrolees;
@@ -30,7 +64,7 @@ public class Competition implements Serializable {
 
 	public Competition() {
 		super();
-	
+
 	}
 
 	public Faculty getFaculty() {
@@ -55,22 +89,6 @@ public class Competition implements Serializable {
 
 	public void setCurrentAmount(Long currentAmount) {
 		this.currentAmount = currentAmount;
-	}
-
-	public Integer getMaxPoints() {
-		return maxPoints;
-	}
-
-	public void setMaxPoints(Integer maxPoints) {
-		this.maxPoints = maxPoints;
-	}
-
-	public Integer getMinPoints() {
-		return minPoints;
-	}
-
-	public void setMinPoints(Integer minPoints) {
-		this.minPoints = minPoints;
 	}
 
 }

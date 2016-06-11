@@ -27,6 +27,7 @@ import by.training.lysiuk.project.datamodel.PlanSet;
 import by.training.lysiuk.project.datamodel.PlanSet_;
 import by.training.lysiuk.project.datamodel.ScoresInSubjects;
 import by.training.lysiuk.project.service.EnroleeService;
+import by.training.lysiuk.project.service.ScoresInSubjectsService;
 
 @Service
 public class EnroleeServiceImpl extends AbstractDaoImpl<Enrolee, Long> implements EnroleeService {
@@ -40,6 +41,9 @@ public class EnroleeServiceImpl extends AbstractDaoImpl<Enrolee, Long> implement
 
 	@Inject
 	private ScoresInSubjectsDao scoresDao;
+	
+	@Inject
+	private ScoresInSubjectsService scoresService;
 
 	@Override
 	public Enrolee getEnrolee(Long id) {
@@ -84,14 +88,14 @@ public class EnroleeServiceImpl extends AbstractDaoImpl<Enrolee, Long> implement
 	public void saveOrUpdateEnroleeWithPoints(Enrolee enrolee, List<ScoresInSubjects> scoresInSubjects) {
 		if (enrolee.getId() == null) {
 			dao.insert(enrolee);
+			for (ScoresInSubjects scores : scoresInSubjects) {
+				scoresDao.insert(scores);
+			}
 		} else {
 			dao.update(enrolee);
-		}
-		for (ScoresInSubjects scores : scoresInSubjects) {
-			if (scores.getId() == null) {
+			scoresService.deleteByEnrolleeId(enrolee.getId());
+			for (ScoresInSubjects scores : scoresInSubjects) {
 				scoresDao.insert(scores);
-			} else {
-				scoresDao.update(scores);
 			}
 		}
 	}

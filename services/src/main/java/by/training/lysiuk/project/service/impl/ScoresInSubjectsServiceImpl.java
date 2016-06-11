@@ -167,4 +167,14 @@ public class ScoresInSubjectsServiceImpl extends AbstractDaoImpl<ScoresInSubject
 		return q.getResultList();
 	}
 
+	@Override
+	public void deleteByEnrolleeId(Long id) {
+		List<ScoresInSubjects> listScores = dao.getAll();
+		for (ScoresInSubjects scores : listScores) {
+			if(scores.getEnrolee().getId() == id) {
+				dao.delete(scores.getId());
+			}
+		}
+	}
+
 }

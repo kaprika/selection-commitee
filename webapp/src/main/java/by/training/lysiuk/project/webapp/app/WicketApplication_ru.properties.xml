@@ -26,7 +26,7 @@
 	<entry key="menu.plans set this year">Все факультеты</entry>
 	<entry key="menu.open plans set">Открытые наборы</entry>
 	<entry key="menu.register oneself">Зарегистрироваться</entry>
-	<entry key="menu.enrolled students">Зачисленные студенты</entry>
+	<entry key="menu.enrolled students">Зачисленные абитуриенты</entry>
 	<entry key="menu.statistics">Статистика</entry>
 	<entry key="menu.login">Войти</entry>
 	<entry key="menu.logout">Выход</entry>
@@ -65,11 +65,22 @@
 	<entry key="btn.subject.create">Добавить предмет</entry>
 
 	<entry key="table.date of registration">Дата регистрации</entry>
-	
+
 	<entry key="table.points">Баллы</entry>
-	
+
 	<entry key="btn.add enrollee">Добавить абитуриента</entry>
-	
+
+	<entry key="message.attention">Внимание!</entry>
+
+	<entry key="message">Представленные данные имеют информационный характер и
+		не являются окончательным результатом.</entry>
+
+	<entry key="table.competition">Конкурс (человек/место)</entry>
+
+	<entry key="table.passing score">Проходной балл</entry>
+
+
+
 
 
 

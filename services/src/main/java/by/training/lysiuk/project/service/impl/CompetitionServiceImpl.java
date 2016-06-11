@@ -1,6 +1,7 @@
 package by.training.lysiuk.project.service.impl;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -20,17 +21,6 @@ import by.training.lysiuk.project.service.ScoresInSubjectsService;
 
 @Service
 public class CompetitionServiceImpl implements CompetitionService {
-
-	// private List<Competition> competitionList = new ArrayList<>();
-	//
-	//
-	// public List<Competition> getCompetitionList() {
-	// return competitionList;
-	// }
-	//
-	// public void setCompetitionList(List<Competition> competitionList) {
-	// this.competitionList = competitionList;
-	// }
 
 	@Inject
 	private PlanSetService planSetService;
@@ -61,16 +51,32 @@ public class CompetitionServiceImpl implements CompetitionService {
 					}
 				}
 			}
-			// Integer maxPoints = enroleeService.maxPointsByFaculty(faculty);
-			// Integer minPoints = enroleeService.minPointsByFaculty(faculty);
+			enrolees.sort(new Comparator<Enrolee>() {
+				@Override
+				public int compare(Enrolee a, Enrolee b) {
+					return -a.getTotalScore().compareTo(b.getTotalScore());
+				}
+			});
+
 			Competition competition = new Competition();
 			competition.setFaculty(planSet.getFaculty());
 			competition.setPlan(planSet.getPlan());
 			competition.setCurrentAmount(currentAmount);
 			competition.setEnrolees(enrolees);
-			// competition.setMaxPoints(maxPoints);
-			// competition.setMinPoints(minPoints);
+			competition.setCompetition((double) (competition.getCurrentAmount()) / competition.getPlan());
+			competition.setStartDateSet(planSet.getStartDateSet());
+			competition.setEndDateSet(planSet.getEndDateSet());
+
 			competitionList.add(competition);
+			int passingScore;
+			if (enrolees.isEmpty()) {
+				passingScore = 0;
+			} else if (enrolees.size() < competition.getPlan()) {
+				passingScore = enrolees.get(enrolees.size() - 1).getTotalScore();
+			} else {
+				passingScore = enrolees.get(competition.getPlan() - 1).getTotalScore();
+			}
+			competition.setPassingScore(passingScore);
 		}
 		return competitionList;
 	}

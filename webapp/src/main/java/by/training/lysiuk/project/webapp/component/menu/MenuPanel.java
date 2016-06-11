@@ -11,6 +11,7 @@ import by.training.lysiuk.project.webapp.page.plan.OpenPlanSetPage;
 import by.training.lysiuk.project.webapp.page.plan.PlanSetPage;
 import by.training.lysiuk.project.webapp.page.plan.PlanSetThisYearPage;
 import by.training.lysiuk.project.webapp.page.registration.RegistrationPage;
+import by.training.lysiuk.project.webapp.page.students.StudentsPage;
 
 public class MenuPanel extends Panel {
 
@@ -49,7 +50,7 @@ public class MenuPanel extends Panel {
 		add(new Link("link-enrolled students") {
 			@Override
 			public void onClick() {
-				setResponsePage(new PlanSetPage());
+				setResponsePage(new StudentsPage());
 			}
 		});
 

@@ -70,6 +70,15 @@
 
 	<entry key="btn.add enrollee">Add enrollee</entry>
 
+	<entry key="message.attention">Attention!</entry>
+	<entry key="message">The data presented are for informational purposes and
+		do not constitute the final result.</entry>
+
+	<entry key="table.competition">Competittion (people/place)</entry>
+
+	<entry key="table.passing score">Проходной балл</entry>
+
+
 
 
 

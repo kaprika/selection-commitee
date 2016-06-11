@@ -65,12 +65,12 @@ public class EnrolleeListPanel extends Panel {
 				item.add(new Label("points1", firstScore.getPoints()));
 				
 				ScoresInSubjects secondScore = scoresInSubjectsService.getScoresInSubjectsByEnrolee(enrolee).get(1);
-				Subject secondSubject = firstScore.getSubject();
+				Subject secondSubject = secondScore.getSubject();
 				item.add(new Label("subject2", secondSubject.getName()));
 				item.add(new Label("points2", secondScore.getPoints()));
 				
 				ScoresInSubjects thirdScore = scoresInSubjectsService.getScoresInSubjectsByEnrolee(enrolee).get(2);
-				Subject thirdSubject = firstScore.getSubject();
+				Subject thirdSubject = thirdScore.getSubject();
 				item.add(new Label("subject3", thirdSubject.getName()));
 				item.add(new Label("points3", thirdScore.getPoints()));
 				
@@ -96,6 +96,7 @@ public class EnrolleeListPanel extends Panel {
 					@Override
 					public void onClick() {
 						try {
+							scoresInSubjectsService.deleteByEnrolleeId(enrolee.getId());
 							enroleeService.delete(enrolee);
 						} catch (PersistenceException e) {
 							System.out.println("caughth persistance exception");
