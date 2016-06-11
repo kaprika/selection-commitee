@@ -98,30 +98,91 @@ public class RegistrationPage extends AbstractPage {
 			public void onEvent(IEvent<?> event) {
 				if (event.getPayload() instanceof PlanSetChangeEvent) {
 					this.setVisible(true);
-					// counterModel.setObject(0);
 				}
 			}
 		};
 		firstSubject.setOutputMarkupId(true);
 		firstSubject.setOutputMarkupPlaceholderTag(true);
-		//
 		firstSubject.setVisible(false);
 		form.add(firstSubject);
 
-		Label secondSubject = new Label("subject2", new Model<String>());
+		Label secondSubject = new Label("subject2", new Model<String>()) {
+			@Override
+			public void onEvent(IEvent<?> event) {
+				if (event.getPayload() instanceof PlanSetChangeEvent) {
+					this.setVisible(true);
+				}
+			}
+		};
 		secondSubject.setOutputMarkupId(true);
 		secondSubject.setOutputMarkupPlaceholderTag(true);
 		form.add(secondSubject);
 
-		Label thirdSubject = new Label("subject3", new Model<String>());
+		Label thirdSubject = new Label("subject3", new Model<String>()) {
+			@Override
+			public void onEvent(IEvent<?> event) {
+				if (event.getPayload() instanceof PlanSetChangeEvent) {
+					this.setVisible(true);
+				}
+			}
+		};
 		thirdSubject.setOutputMarkupId(true);
 		thirdSubject.setOutputMarkupPlaceholderTag(true);
 		form.add(thirdSubject);
 
-		/*
-		 * PlanSetFilter filter = new PlanSetFilter();
-		 * filter.setFetchFaculty(true); filter.setFetchSubjects(true);
-		 */
+		ScoresInSubjects firstPoints = scoresInSubjects.get(0);
+		TextField<Integer> firstScoresField = new TextField<Integer>("first points",
+				new PropertyModel<>(firstPoints, "points")) {
+			@Override
+			public void onEvent(IEvent<?> event) {
+				if (event.getPayload() instanceof PlanSetChangeEvent) {
+					this.setVisible(true);
+				}
+			}
+		};
+		firstScoresField.add(RangeValidator.<Integer> range(0, 100));
+		firstScoresField.setLabel(new ResourceModel("table.score1"));
+		firstScoresField.setRequired(true);
+		firstScoresField.setVisible(false);
+		firstScoresField.setOutputMarkupPlaceholderTag(true);
+		firstScoresField.setOutputMarkupId(true);
+		form.add(firstScoresField);
+
+		ScoresInSubjects secondPoints = scoresInSubjects.get(1);
+		TextField<Integer> secondScoresField = new TextField<Integer>("second points",
+				new PropertyModel<>(secondPoints, "points")) {
+			@Override
+			public void onEvent(IEvent<?> event) {
+				if (event.getPayload() instanceof PlanSetChangeEvent) {
+					this.setVisible(true);
+				}
+			}
+		};
+		secondScoresField.add(RangeValidator.<Integer> range(0, 100));
+		secondScoresField.setLabel(new ResourceModel("table.score2"));
+		secondScoresField.setRequired(true);
+		secondScoresField.setVisible(false);
+		secondScoresField.setOutputMarkupPlaceholderTag(true);
+		secondScoresField.setOutputMarkupId(true);
+		form.add(secondScoresField);
+
+		ScoresInSubjects thirdPoints = scoresInSubjects.get(2);
+		TextField<Integer> thirdScoresField = new TextField<Integer>("third points",
+				new PropertyModel<>(thirdPoints, "points")) {
+			@Override
+			public void onEvent(IEvent<?> event) {
+				if (event.getPayload() instanceof PlanSetChangeEvent) {
+					this.setVisible(true);
+				}
+			}
+		};
+		thirdScoresField.add(RangeValidator.<Integer> range(0, 100));
+		thirdScoresField.setLabel(new ResourceModel("table.score3"));
+		thirdScoresField.setRequired(true);
+		thirdScoresField.setVisible(false);
+		thirdScoresField.setOutputMarkupPlaceholderTag(true);
+		thirdScoresField.setOutputMarkupId(true);
+		form.add(thirdScoresField);
 
 		final DropDownChoice<PlanSet> dropDownChoice = new DropDownChoice<PlanSet>("planSet",
 				planSetService.getByCurrentDate(new PlanSetFilter()), PlanSetChoiceRenderer.INSTANCE);
@@ -136,69 +197,23 @@ public class RegistrationPage extends AbstractPage {
 				for (int i = 0; i < 3; i++) {
 					scoresInSubjects.get(i).setSubject(subjects.get(i));
 				}
-
 				String firstSubjectName = scoresInSubjects.get(0).getSubject().getName();
 				firstSubject.setDefaultModelObject(firstSubjectName);
-				target.add(firstSubject);
 				String secondSubjectName = scoresInSubjects.get(1).getSubject().getName();
 				secondSubject.setDefaultModelObject(secondSubjectName);
-				target.add(secondSubject);
 				String thirdSubjectName = scoresInSubjects.get(2).getSubject().getName();
 				thirdSubject.setDefaultModelObject(thirdSubjectName);
-				target.add(thirdSubject);
 				send(getPage(), Broadcast.BREADTH, new PlanSetChangeEvent());
+				target.add(firstSubject, secondSubject, thirdSubject, firstScoresField, secondScoresField,
+						thirdScoresField);
 			}
 		});
-
-//		dropDownChoice.add(new AjaxEventBehavior("change") {
-//			@Override
-//			protected void onEvent(AjaxRequestTarget target) {
-//				send(getPage(), Broadcast.BREADTH, new PlanSetChangeEvent());
-//			}
-//		});
 
 		TextField<Integer> certificateField = new TextField<>("certificate");
 		certificateField.add(RangeValidator.<Integer> range(0, 100));
 		certificateField.setLabel(new ResourceModel("table.certificate"));
 		certificateField.setRequired(true);
 		form.add(certificateField);
-
-		ScoresInSubjects firstPoints = scoresInSubjects.get(0);
-		TextField<Integer> firstScoresField = new TextField<Integer>("first points",
-				new PropertyModel<>(firstPoints, "points")) {
-			@Override
-			public void onEvent(IEvent<?> event) {
-				if (event.getPayload() instanceof PlanSetChangeEvent) {
-					this.setVisible(true);
-				//	this.setEnabled(true);
-				
-					// counterModel.setObject(0);
-				}
-			}
-		};
-		firstScoresField.add(RangeValidator.<Integer> range(0, 100));
-		firstScoresField.setLabel(new ResourceModel("table.score1"));
-		firstScoresField.setRequired(true);
-		firstScoresField.setVisible(false);
-		firstScoresField.setOutputMarkupPlaceholderTag(true);
-		firstScoresField.setOutputMarkupId(true);
-		form.add(firstScoresField);
-
-		ScoresInSubjects secondPoints = scoresInSubjects.get(1);
-		TextField<Integer> secondScoresField = new TextField<>("second points",
-				new PropertyModel<>(secondPoints, "points"));
-		secondScoresField.add(RangeValidator.<Integer> range(0, 100));
-		secondScoresField.setLabel(new ResourceModel("table.score2"));
-		secondScoresField.setRequired(true);
-		form.add(secondScoresField);
-
-		ScoresInSubjects thirdPoints = scoresInSubjects.get(2);
-		TextField<Integer> thirdScoresField = new TextField<>("third points",
-				new PropertyModel<>(thirdPoints, "points"));
-		thirdScoresField.add(RangeValidator.<Integer> range(0, 100));
-		thirdScoresField.setLabel(new ResourceModel("table.score3"));
-		thirdScoresField.setRequired(true);
-		form.add(thirdScoresField);
 
 		form.add(new SubmitLink("save") {
 			@Override
