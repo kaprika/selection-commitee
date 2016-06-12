@@ -2,6 +2,7 @@ package by.training.lysiuk.project.service.impl;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -32,11 +33,9 @@ public class CompetitionServiceImpl implements CompetitionService {
 	private EnroleeService enroleeService;
 
 	@Override
-	public List<Competition> createCompetitionList() {
+	public List<Competition> createCompetitionList(List<PlanSet> planSetList) {
 		List<Competition> competitionList = new ArrayList<>();
-		List<PlanSet> planSetList = planSetService.getByCurrentDate(new PlanSetFilter());
 		for (PlanSet planSet : planSetList) {
-
 			Faculty faculty = planSet.getFaculty();
 
 			Long currentAmount = enroleeService.countByDateAndFaculty(faculty);
@@ -79,6 +78,47 @@ public class CompetitionServiceImpl implements CompetitionService {
 			competition.setPassingScore(passingScore);
 		}
 		return competitionList;
+	}
+
+	@Override
+	public List<Competition> competitionListByCurrentDate() {
+		List<Competition> competitionList = createCompetitionList(planSetService.getByCurrentDate(new PlanSetFilter()));
+		competitionList.sort(new Comparator<Competition>(){
+			@Override
+			public int compare(Competition a, Competition b) {
+				return a.getFaculty().getName().compareTo(b.getFaculty().getName());
+			}
+		});
+		return competitionList;
+	}
+
+	@Override
+	public List<Competition> closedCompetitionList(PlanSetFilter filter) {
+		List<PlanSet> planSetList = planSetService.getClosedPlansSet(filter);
+		List<Competition> closedCompetitionList = createCompetitionList(planSetList);
+		for (Competition competition : closedCompetitionList) {
+			if (competition.getCurrentAmount() > competition.getPlan()) {
+				competition.getEnrolees().subList(competition.getPlan() - 1, competition.getEnrolees().size() - 1)
+						.clear();
+			}
+			competition.getEnrolees().sort(new Comparator<Enrolee>() {
+				@Override
+				public int compare(Enrolee a, Enrolee b) {
+					return a.getLastName().compareTo(b.getLastName());
+				}
+			});
+		}
+		closedCompetitionList.sort(new Comparator<Competition>() {
+			@Override
+			public int compare(Competition a, Competition b) {
+				if (a.getEndDateSet().getYear() == b.getEndDateSet().getYear()) {
+					return a.getFaculty().getName().compareToIgnoreCase(b.getFaculty().getName());
+				} else {
+					return a.getEndDateSet().compareTo(b.getEndDateSet());
+				}
+			}
+		});
+		return closedCompetitionList;
 	}
 
 }

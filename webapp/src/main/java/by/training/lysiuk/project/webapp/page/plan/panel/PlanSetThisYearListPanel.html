@@ -2,6 +2,9 @@
 	<table class="list-table">
 		<thead>
 			<tr>
+				<th><a wicket:id="sort-id">id</a></th>
+
+
 				<th><a wicket:id="sort-start date set"><wicket:message
 							key="table.start date set" /></a></th>
 				<th><a wicket:id="sort-end date set"><wicket:message
@@ -12,10 +15,14 @@
 				<th><wicket:message key="table.subject3" /></th>
 				<th><a wicket:id="sort-plan"><wicket:message
 							key="table.plan" /></a></th>
+
+				<th><wicket:message key="table.actions" /></th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr wicket:id="rows">
+				<td><span wicket:id="id" /></td>
+
 				<td><span wicket:id="start date set" /></td>
 				<td><span wicket:id="end date set" /></td>
 				<td><span wicket:id="faculty" /></td>
@@ -23,6 +30,10 @@
 				<td><span wicket:id="second subject" /></td>
 				<td><span wicket:id="third subject" /></td>
 				<td><span wicket:id="plan" /></td>
+
+				<td><a wicket:id="delete-link"><wicket:message
+							key="table.delete" /></a>/<a wicket:id="edit-link"><wicket:message
+							key="table.edit" /></a></td>
 			</tr>
 		</tbody>
 	</table>

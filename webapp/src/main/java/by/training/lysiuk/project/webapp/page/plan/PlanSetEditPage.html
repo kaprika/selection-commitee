@@ -5,33 +5,33 @@
 
 		<table>
 			<tr>
-				<td style="width: 20%;"><b>Start date set:</b></td>
+				<td style="width: 20%;"><b><wicket:message key="table.start date set"/>:</b></td>
 				<td style="width: 80%;"><input type="text" wicket:id="startDateSet" /></td>
 			</tr>
 			<tr>
-				<td><b>Faculty:</b></td>
+				<td><b><wicket:message key="table.faculty"/>:</b></td>
 				<td><select wicket:id="faculty"></select></td>
 			</tr>
 			<tr>
-				<td><b>Plan:</b></td>
+				<td><b><wicket:message key="table.plan"/>:</b></td>
 				<td><input type="text" wicket:id="plan" /></td>
 			</tr>
 			<tr>
-				<td><b>End date set:</b></td>
+				<td><b><wicket:message key="table.end date set"/>:</b></td>
 				<td><input type="text" wicket:id="endDateSet" /></td>
 			</tr>
 			<tr>
-				<td><b>Subjects:</b></td>
+				<td><b><wicket:message key="table.subjects"/>:</b></td>
 				<td><span wicket:id="subjects" /></td>
 			</tr>
 			<tr>
-				<td><button type="submit" wicket:id="save">SAVE</button></td>
+				<td><button type="submit" wicket:id="save"><wicket:message key="btn.save"/></button></td>
 				<td></td>
 			</tr>
 		</table>
 	</form>
 
-	<button type="submit" wicket:id="cancel">CANCEL</button>
+	<button type="submit" wicket:id="cancel"><wicket:message key="btn.cancel"/></button>
 	<div wicket:id="feedback"></div>
 
 </wicket:extend>

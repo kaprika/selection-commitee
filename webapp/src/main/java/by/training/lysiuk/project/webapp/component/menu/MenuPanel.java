@@ -3,6 +3,7 @@ package by.training.lysiuk.project.webapp.component.menu;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 
+import by.training.lysiuk.project.dataaccess.filters.PlanSetFilter;
 import by.training.lysiuk.project.datamodel.Enrolee;
 import by.training.lysiuk.project.webapp.app.AuthorizedSession;
 import by.training.lysiuk.project.webapp.page.competition.CompetitionPage;
@@ -30,15 +31,7 @@ public class MenuPanel extends Panel {
 				setResponsePage(new PlanSetThisYearPage());
 			}
 		};
-		link.setEnabled(false);
 		add(link);
-
-		add(new Link("link-all plans set this year") {
-			@Override
-			public void onClick() {
-				setResponsePage(new PlanSetThisYearPage());
-			}
-		});
 
 		add(new Link("link-open sets") {
 			@Override
@@ -50,7 +43,7 @@ public class MenuPanel extends Panel {
 		add(new Link("link-enrolled students") {
 			@Override
 			public void onClick() {
-				setResponsePage(new StudentsPage());
+				setResponsePage(new StudentsPage(new PlanSetFilter()));
 			}
 		});
 

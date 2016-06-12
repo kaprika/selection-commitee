@@ -17,6 +17,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
+import by.training.lysiuk.project.dataaccess.filters.PlanSetFilter;
 import by.training.lysiuk.project.datamodel.Competition;
 import by.training.lysiuk.project.datamodel.Enrolee;
 import by.training.lysiuk.project.datamodel.Faculty;
@@ -31,7 +32,7 @@ public class CompetitionListPanel extends Panel {
 		super(id);
 
 		CompetitionDataProvider competitionDataProvider = new CompetitionDataProvider();
-		DataView<Competition> dataView = new DataView<Competition>("rows", competitionDataProvider, 10) {
+		DataView<Competition> dataView = new DataView<Competition>("rows", competitionDataProvider) {
 			@Override
 			protected void populateItem(Item<Competition> item) {
 				Competition competition = item.getModelObject();
@@ -101,12 +102,12 @@ public class CompetitionListPanel extends Panel {
 			 * planSetFilter.setOffset((int) first); return
 			 * planSetService.find(planSetFilter).iterator();
 			 */
-			return competitionService.createCompetitionList().iterator();
+			return competitionService.competitionListByCurrentDate().iterator();
 		}
 
 		@Override
 		public long size() {
-			return competitionService.createCompetitionList().size();
+			return competitionService.competitionListByCurrentDate().size();
 			// planSetService.count(planSetFilter);
 		}
 

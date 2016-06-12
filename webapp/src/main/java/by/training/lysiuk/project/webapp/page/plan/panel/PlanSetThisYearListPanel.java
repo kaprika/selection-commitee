@@ -1,6 +1,7 @@
 package by.training.lysiuk.project.webapp.page.plan.panel;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Iterator;
 
 import javax.inject.Inject;
@@ -46,6 +47,15 @@ public class PlanSetThisYearListPanel extends Panel {
 			protected void populateItem(Item<PlanSet> item) {
 				PlanSet planSet = item.getModelObject();
 
+				planSet.getSubjects().sort(new Comparator<Subject>(){
+					@Override
+					public int compare(Subject o1, Subject o2) {
+						return o1.getName().compareTo(o2.getName());
+					}
+				});
+				
+				item.add(new Label("id", planSet.getId()));
+				
 				item.add(DateLabel.forDatePattern("start date set", Model.of(planSet.getStartDateSet()), "dd-MM-yyyy"));
 				item.add(DateLabel.forDatePattern("end date set", Model.of(planSet.getEndDateSet()), "dd-MM-yyyy"));
 
@@ -62,10 +72,30 @@ public class PlanSetThisYearListPanel extends Panel {
 				item.add(new Label("third subject", new PropertyModel<>(thirdSubject, "name")));
 
 				item.add(new Label("plan", planSet.getPlan()));
+				
+				item.add(new Link<Void>("edit-link") {
+					@Override
+					public void onClick() {
+						setResponsePage(new PlanSetEditPage(planSet, false));
+					}
+				});
+				item.add(new Link<Void>("delete-link") {
+					@Override
+					public void onClick() {
+						try {
+							planSetService.delete(planSet);
+						} catch (PersistenceException e) {
+							System.out.println("caughth persistance exception");
+						}
+						setResponsePage(new PlanSetPage());
+					}
+				});
 
 			}
 		};
 		add(dataView);
+		add(new OrderByBorder("sort-id", PlanSet_.id, planSetDataProvider));
+
 		add(new OrderByBorder("sort-start date set", PlanSet_.startDateSet, planSetDataProvider));
 		add(new OrderByBorder("sort-plan", PlanSet_.plan, planSetDataProvider));
 		add(new OrderByBorder("sort-end date set", PlanSet_.endDateSet, planSetDataProvider));
@@ -93,7 +123,7 @@ public class PlanSetThisYearListPanel extends Panel {
 
 		@Override
 		public long size() {
-			return planSetService.getByCurrentYear(planSetFilter).size();//planSetService.count(new PlanSetFilter());
+			return planSetService.getByCurrentYear(planSetFilter).size();
 		}
 
 		@Override

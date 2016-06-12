@@ -76,7 +76,30 @@
 
 	<entry key="table.competition">Competittion (people/place)</entry>
 
-	<entry key="table.passing score">Проходной балл</entry>
+	<entry key="table.passing score">Passing score</entry>
+
+	<entry key="start date">Start date</entry>
+	<entry key="end date">End date</entry>
+
+	<entry key="table.from">From</entry>
+	<entry key="table.to">To</entry>
+
+	<entry key="btn.show">Show</entry>
+
+	<entry key="table.enrolled students">Enrolled students</entry>
+
+	<entry key="btn.create plan set">New plan set</entry>
+
+	<entry key="table.subjects">Subjects</entry>
+
+	<entry key="login.authorization">Authorization</entry>
+
+	<entry key="login.password">Password</entry>
+
+
+
+
+
 
 
 

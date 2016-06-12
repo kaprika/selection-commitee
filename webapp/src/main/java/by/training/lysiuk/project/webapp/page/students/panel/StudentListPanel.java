@@ -2,118 +2,105 @@ package by.training.lysiuk.project.webapp.page.students.panel;
 
 import java.io.Serializable;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.inject.Inject;
-import javax.persistence.PersistenceException;
-import javax.persistence.metamodel.SingularAttribute;
 
-import org.apache.wicket.extensions.markup.html.repeater.data.sort.OrderByBorder;
-import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
+import org.apache.wicket.datetime.markup.html.basic.DateLabel;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 
-import by.training.lysiuk.project.dataaccess.filters.SubjectFilter;
-import by.training.lysiuk.project.datamodel.Subject;
-import by.training.lysiuk.project.datamodel.Subject_;
-import by.training.lysiuk.project.service.SubjectService;
-import by.training.lysiuk.project.webapp.page.subjects.SubjectEditPage;
-import by.training.lysiuk.project.webapp.page.subjects.SubjectsPage;
+import by.training.lysiuk.project.dataaccess.filters.PlanSetFilter;
+import by.training.lysiuk.project.datamodel.Competition;
+import by.training.lysiuk.project.datamodel.Enrolee;
+import by.training.lysiuk.project.datamodel.Faculty;
+import by.training.lysiuk.project.service.CompetitionService;
 
 public class StudentListPanel extends Panel {
 
 	@Inject
-	private SubjectService subjectService;
+	private CompetitionService competitionService;
 
-	public StudentListPanel(String id) {
+	private PlanSetFilter filter;
+
+	public StudentListPanel(String id, PlanSetFilter filter) {
 		super(id);
+		this.filter = filter;
 
-		SubjectsDataProvider subjectsDataProvider = new SubjectsDataProvider();
-		DataView<Subject> dataView = new DataView<Subject>("rows", subjectsDataProvider, 15) {
+		CompetitionDataProvider competitionDataProvider = new CompetitionDataProvider();
+
+		DataView<Competition> dataView = new DataView<Competition>("rows", competitionDataProvider) {
 			@Override
-			protected void populateItem(Item<Subject> item) {
-				Subject subject = item.getModelObject();
+			protected void populateItem(Item<Competition> item) {
+				Competition competition = item.getModelObject();
 
-				item.add(new Label("id", subject.getId()));
-				item.add(new Label("name", subject.getName()));
-				// item.add(new Label("price", product.getBasePrice()));
-				// item.add(DateLabel.forDatePattern("created",
-				// Model.of(product.getCreated()), "dd-MM-yyyy"));
+				Faculty faculty = competition.getFaculty();
+				item.add(new Label("faculty", new PropertyModel<>(faculty, "name")));
+				String listEnrolees = "";
+				List<Enrolee> enrolees = competition.getEnrolees();
+				int i = 1;
+				for (Enrolee enrolee : enrolees) {
+					listEnrolees += i + " " + enrolee.getFirstName() + " " + enrolee.getLastName() + " ("
+							+ enrolee.getTotalScore() + ")<br/>";
+					i++;
+				}
 
-				// CheckBox checkbox = new CheckBox("active",
-				// Model.of(product.getActive()));
-				// checkbox.setEnabled(false);
-				// item.add(checkbox);
-				item.add(new Link<Void>("edit-link") {
-					@Override
-					public void onClick() {
-						setResponsePage(new SubjectEditPage(subject));
-					}
-				});
-				item.add(new Link<Void>("delete-link") {
-					@Override
-					public void onClick() {
-						try {
-							subjectService.delete(subject);
-						} catch (PersistenceException e) {
-							System.out.println("caughth persistance exception");
-						}
-
-						setResponsePage(new SubjectsPage());
-					}
-				});
+				item.add(new Label("list-enrolees", listEnrolees).setEscapeModelStrings(false));
+				item.add(DateLabel.forDatePattern("start date", Model.of(competition.getStartDateSet()), "dd-MM-yyyy"));
+				item.add(DateLabel.forDatePattern("end date", Model.of(competition.getEndDateSet()), "dd-MM-yyyy"));
+				item.add(new Label("plan", competition.getPlan()));
+				item.add(new Label("competition", competition.getCompetition()));
+				item.add(new Label("passing score", competition.getPassingScore()));
 			}
 		};
 		add(dataView);
-		add(new PagingNavigator("paging", dataView));
-
-		add(new OrderByBorder("sort-id", Subject_.id, subjectsDataProvider));
-		add(new OrderByBorder("sort-name", Subject_.name, subjectsDataProvider));
-
-		// add(new OrderByBorder("sort-price", Product_.basePrice,
-		// facultiesDataProvider));
-
+//		add(new PagingNavigator("paging", dataView));
+		// добавить пагинацию
+		/*
+		 * add(new OrderByBorder("sort-id", PlanSet_.id, planSetDataProvider));
+		 * add(new OrderByBorder("sort-start date set", PlanSet_.startDateSet,
+		 * planSetDataProvider)); add(new OrderByBorder("sort-plan",
+		 * PlanSet_.plan, planSetDataProvider)); add(new OrderByBorder(
+		 * "sort-end date set", PlanSet_.endDateSet, planSetDataProvider));
+		 * add(new OrderByBorder("sort-price", Product_.basePrice,
+		 * facultiesDataProvider));
+		 */
 	}
 
-	private class SubjectsDataProvider extends SortableDataProvider<Subject, Serializable> {
+	private class CompetitionDataProvider extends SortableDataProvider<Competition, Serializable> {
 
-		private SubjectFilter subjectFilter;
+		// private PlanSetFilter planSetFilter;
 
-		public SubjectsDataProvider() {
+		public CompetitionDataProvider() {
 			super();
-			subjectFilter = new SubjectFilter();
-			setSort((Serializable) Subject_.name, SortOrder.ASCENDING);
+			// planSetFilter = new PlanSetFilter();
+			// planSetFilter.setFetchFaculty(true);
+			// planSetFilter.setFetchSubjects(true);
+			// setSort((Serializable) PlanSet_.startDateSet,
+			// SortOrder.DESCENDING);
 		}
 
 		@Override
-		public Iterator<Subject> iterator(long first, long count) {
-			Serializable property = getSort().getProperty();
-			SortOrder propertySortOrder = getSortState().getPropertySortOrder(property);
-
-			subjectFilter.setSortProperty((SingularAttribute) property);
-			subjectFilter.setSortOrder(propertySortOrder.equals(SortOrder.ASCENDING) ? true : false);
-
-			subjectFilter.setLimit((int) count);
-			subjectFilter.setOffset((int) first);
-			return subjectService.find(subjectFilter).iterator();
+		public Iterator<Competition> iterator(long first, long count) {
+			return competitionService.closedCompetitionList(filter).iterator();
 		}
 
 		@Override
 		public long size() {
-			return subjectService.count(subjectFilter);
+			return competitionService.closedCompetitionList(filter).size();
 		}
 
 		@Override
-		public IModel<Subject> model(Subject object) {
+		public IModel<Competition> model(Competition object) {
 			return new Model(object);
 		}
-
 	}
 
 }

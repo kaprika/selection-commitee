@@ -3,14 +3,14 @@
 		<thead>
 			<tr>
 				<th><a wicket:id="sort-id">id</a></th>
-				<th><a wicket:id="sort-start date set">start date set</a></th>
-				<th><a wicket:id="sort-end date set">end date set</a></th>
-				<th>faculty</th>
-				<th>subject 1</th>
-				<th>subject 2</th>
-				<th>subject 3</th>
-				<th><a wicket:id="sort-plan">plan</a></th>
-				<th>actions</th>
+				<th><a wicket:id="sort-start date set"><wicket:message key="table.start date set"/></a></th>
+				<th><a wicket:id="sort-end date set"><wicket:message key="table.end date set"/></a></th>
+				<th><wicket:message key="table.faculty"/></th>
+				<th><wicket:message key="table.subject1"/></th>
+				<th><wicket:message key="table.subject2"/></th>
+				<th><wicket:message key="table.subject3"/></th>
+				<th><a wicket:id="sort-plan"><wicket:message key="table.plan"/></a></th>
+				<th><wicket:message key="table.actions"/></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -23,8 +23,8 @@
 				<td><span wicket:id="second subject" /></td>
 				<td><span wicket:id="third subject" /></td>
 				<td><span wicket:id="plan" /></td>
-				<td><a wicket:id="delete-link">delete</a>/<a
-					wicket:id="edit-link">edit</a></td>
+				<td><a wicket:id="delete-link"><wicket:message key="table.delete"/></a>/<a
+					wicket:id="edit-link"><wicket:message key="table.edit"/></a></td>
 			</tr>
 		</tbody>
 	</table>

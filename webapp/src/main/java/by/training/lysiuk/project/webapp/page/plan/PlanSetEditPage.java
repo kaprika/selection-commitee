@@ -18,6 +18,7 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.model.util.CollectionModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.validation.IValidatable;
@@ -70,21 +71,25 @@ public class PlanSetEditPage extends AbstractPage {
 		DateTextField startDateSetField = new DateTextField("startDateSet");
 		startDateSetField.add(new DatePicker());
 		startDateSetField.setRequired(true);
+		startDateSetField.setLabel(new ResourceModel("table.start date set"));
 		form.add(startDateSetField);
 
 		DropDownChoice<Faculty> facultyField = new DropDownChoice<Faculty>("faculty", facultyService.getAll(),
 				FacultyChoiceRenderer.INSTANCE);
 		facultyField.setRequired(true);
+		facultyField.setLabel(new ResourceModel("table.faculty"));
 		form.add(facultyField);
 
 		TextField<Integer> planField = new TextField<>("plan");
 		planField.add(RangeValidator.<Integer> range(1, 1_000));
 		planField.setRequired(true);
+		planField.setLabel(new ResourceModel("table.plan"));
 		form.add(planField);
 
 		DateTextField endDateSetField = new DateTextField("endDateSet");
 		endDateSetField.add(new DatePicker());
 		endDateSetField.setRequired(true);
+		endDateSetField.setLabel(new ResourceModel("table.end date set"));
 		form.add(endDateSetField);
 
 		List<Subject> allSubjects = subjectService.getAll();
@@ -93,6 +98,7 @@ public class PlanSetEditPage extends AbstractPage {
 		palette.add(new DefaultTheme());
 		palette.setRequired(true);
 		palette.add(new SubjectsQuantityValidator());
+		palette.setLabel(new ResourceModel("table.subjects"));
 		form.add(palette);
 
 		form.add(new SubmitLink("save") {

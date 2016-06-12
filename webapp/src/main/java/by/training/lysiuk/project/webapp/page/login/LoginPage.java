@@ -9,6 +9,7 @@ import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.util.string.Strings;
 
 /**
@@ -18,12 +19,12 @@ import org.apache.wicket.util.string.Strings;
  */
 public class LoginPage extends WebPage {
 
-    public static final String ID_FORM = "form";
+	public static final String ID_FORM = "form";
 
-    private String username;
-    private String password;
+	private String username;
+	private String password;
 
-    @Override
+	@Override
     protected void onInitialize() {
         super.onInitialize();
 
@@ -35,8 +36,10 @@ public class LoginPage extends WebPage {
         final Form<Void> form = new Form<Void>(ID_FORM);
         form.setDefaultModel(new CompoundPropertyModel<LoginPage>(this));
         form.add(new RequiredTextField<String>("username"));
-        form.add(new PasswordTextField("password"));
-
+        PasswordTextField passwordTextField =new PasswordTextField("password");
+        passwordTextField.setLabel(new ResourceModel("login.password"));
+        form.add(passwordTextField);
+    
         form.add(new SubmitLink("submit-btn") {
             @Override
             public void onSubmit() {

@@ -138,6 +138,23 @@ public class PlanSetServiceImpl extends AbstractDaoImpl<PlanSet, Long> implement
 		TypedQuery<PlanSet> q = em.createQuery(cq);
 		return q.getResultList();
 	}
+
+	@Override
+	public List<PlanSet> getClosedPlansSet(PlanSetFilter filter) {
+		EntityManager em = getEntityManager();
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<PlanSet> cq = cb.createQuery(PlanSet.class);
+		Root<PlanSet> from = cq.from(PlanSet.class);
+
+		from.fetch(PlanSet_.faculty, JoinType.LEFT);
+		from.fetch(PlanSet_.subjects, JoinType.LEFT);
+
+		Predicate endDateGreaterThanOrEqualCondition = cb.greaterThanOrEqualTo(from.get(PlanSet_.endDateSet), filter.getStartDate());
+		Predicate endDateLessThanOrEqualCondition = cb.lessThanOrEqualTo(from.get(PlanSet_.endDateSet), filter.getEndDate());
+		cq.select(from).where(cb.and(endDateGreaterThanOrEqualCondition, endDateLessThanOrEqualCondition)).distinct(true);
+		TypedQuery<PlanSet> q = em.createQuery(cq);
+		return q.getResultList();
+	}
 	
 	
 

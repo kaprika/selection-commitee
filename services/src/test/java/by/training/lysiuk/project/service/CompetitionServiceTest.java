@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import by.training.lysiuk.project.dataaccess.filters.PlanSetFilter;
 import by.training.lysiuk.project.datamodel.Competition;
 import by.training.lysiuk.project.datamodel.Enrolee;
 
@@ -20,9 +21,9 @@ public class CompetitionServiceTest {
 	private CompetitionService competitionService;
 
 	@Test
-	public void createCompetitionListTest() {
+	public void competitionListByCurrentDateTest() {
 
-		List<Competition> competitionList = competitionService.createCompetitionList();
+		List<Competition> competitionList = competitionService.competitionListByCurrentDate();
 
 		System.out.println(competitionList.isEmpty());
 		for (Competition competition : competitionList) {

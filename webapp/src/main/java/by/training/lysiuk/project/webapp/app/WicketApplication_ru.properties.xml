@@ -79,6 +79,26 @@
 
 	<entry key="table.passing score">Проходной балл</entry>
 
+	<entry key="start date">Дата начала</entry>
+	<entry key="end date">Дата окончания</entry>
+
+	<entry key="table.from">С</entry>
+	<entry key="table.to">По</entry>
+
+	<entry key="btn.show">Показать</entry>
+
+	<entry key="table.enrolled students">Зачисленные абитуриенты</entry>
+
+	<entry key="btn.create plan set">Новый план набора</entry>
+
+	<entry key="table.subjects">Предметы</entry>
+
+	<entry key="login.authorization">Авторизация</entry>
+
+	<entry key="login.password">Пароль</entry>
+
+
+
 
 
 

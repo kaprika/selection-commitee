@@ -1,6 +1,7 @@
 package by.training.lysiuk.project.webapp.page.plan.panel;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Iterator;
 
 import javax.inject.Inject;
@@ -23,6 +24,7 @@ import org.apache.wicket.model.Model;
 import by.training.lysiuk.project.dataaccess.filters.PlanSetFilter;
 import by.training.lysiuk.project.datamodel.PlanSet;
 import by.training.lysiuk.project.datamodel.PlanSet_;
+import by.training.lysiuk.project.datamodel.Subject;
 import by.training.lysiuk.project.service.PlanSetService;
 import by.training.lysiuk.project.webapp.page.plan.PlanSetEditPage;
 import by.training.lysiuk.project.webapp.page.plan.PlanSetPage;
@@ -40,6 +42,12 @@ public class PlanSetListPanel extends Panel {
 			@Override
 			protected void populateItem(Item<PlanSet> item) {
 				PlanSet planSet = item.getModelObject();
+				planSet.getSubjects().sort(new Comparator<Subject>(){
+					@Override
+					public int compare(Subject o1, Subject o2) {
+						return o1.getName().compareTo(o2.getName());
+					}
+				});
 
 				item.add(new Label("id", planSet.getId()));
 				item.add(DateLabel.forDatePattern("start date set", Model.of(planSet.getStartDateSet()), "dd-MM-yyyy"));
