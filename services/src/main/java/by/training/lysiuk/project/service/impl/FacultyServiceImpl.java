@@ -85,10 +85,6 @@ public class FacultyServiceImpl extends AbstractDaoImpl<Faculty, Long> implement
 		} else {
 			return faculties.get(0);
 		}
-		/*
-		 * Faculty faculty; try { faculty = q.getSingleResult(); } catch
-		 * (EntityNotFoundException e) { return null; } return faculty;
-		 */
 
 	}
 

@@ -1,16 +1,22 @@
 package by.training.lysiuk.project.webapp.page.plan.panel;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Iterator;
 
 import javax.inject.Inject;
+import javax.persistence.PersistenceException;
 import javax.persistence.metamodel.SingularAttribute;
 
+import org.apache.wicket.authorization.Action;
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeAction;
 import org.apache.wicket.datetime.markup.html.basic.DateLabel;
+import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortStateLocator;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.OrderByBorder;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.data.DataView;
@@ -24,6 +30,8 @@ import by.training.lysiuk.project.datamodel.PlanSet;
 import by.training.lysiuk.project.datamodel.PlanSet_;
 import by.training.lysiuk.project.datamodel.Subject;
 import by.training.lysiuk.project.service.PlanSetService;
+import by.training.lysiuk.project.webapp.page.plan.PlanSetEditPage;
+import by.training.lysiuk.project.webapp.page.plan.PlanSetPage;
 
 public class OpenPlanSetListPanel extends Panel {
 
@@ -38,6 +46,14 @@ public class OpenPlanSetListPanel extends Panel {
 			@Override
 			protected void populateItem(Item<PlanSet> item) {
 				PlanSet planSet = item.getModelObject();
+				planSet.getSubjects().sort(new Comparator<Subject>() {
+					@Override
+					public int compare(Subject o1, Subject o2) {
+						return o1.getName().compareTo(o2.getName());
+					}
+				});
+
+				item.add(new InvisibleLabel("id", planSet.getId()));
 
 				item.add(DateLabel.forDatePattern("start date set", Model.of(planSet.getStartDateSet()), "dd-MM-yyyy"));
 				item.add(DateLabel.forDatePattern("end date set", Model.of(planSet.getEndDateSet()), "dd-MM-yyyy"));
@@ -55,10 +71,30 @@ public class OpenPlanSetListPanel extends Panel {
 				item.add(new Label("third subject", new PropertyModel<>(thirdSubject, "name")));
 
 				item.add(new Label("plan", planSet.getPlan()));
+				item.add(new InvisibleLink<Void>("edit-link") {
+					@Override
+					public void onClick() {
+						setResponsePage(new PlanSetEditPage(planSet, false));
+					}
+				});
+				item.add(new InvisibleLink<Void>("delete-link") {
+					@Override
+					public void onClick() {
+						PlanSetPage page = new PlanSetPage();
+						try {
+							planSetService.delete(planSet);
+						} catch (PersistenceException e) {
+							page.error(getString("planSet.error"));
+						} finally {
+							setResponsePage(page);
+						}
+					}
+				});
 
 			}
 		};
 		add(dataView);
+		add(new InvisibleOrderByBorder("sort-id", PlanSet_.id, planSetDataProvider));
 		add(new OrderByBorder("sort-start date set", PlanSet_.startDateSet, planSetDataProvider));
 		add(new OrderByBorder("sort-plan", PlanSet_.plan, planSetDataProvider));
 		add(new OrderByBorder("sort-end date set", PlanSet_.endDateSet, planSetDataProvider));
@@ -68,7 +104,7 @@ public class OpenPlanSetListPanel extends Panel {
 	private class PlanSetDataProvider extends SortableDataProvider<PlanSet, Serializable> {
 
 		private PlanSetFilter planSetFilter;
-		
+
 		public PlanSetDataProvider() {
 			super();
 			planSetFilter = new PlanSetFilter();
@@ -86,12 +122,40 @@ public class OpenPlanSetListPanel extends Panel {
 
 		@Override
 		public long size() {
-			return planSetService.getByCurrentDate(planSetFilter).size();//planSetService.count(new PlanSetFilter());
+			return planSetService.getByCurrentDate(planSetFilter).size();
 		}
 
 		@Override
 		public IModel<PlanSet> model(PlanSet object) {
 			return new Model(object);
+		}
+	}
+
+	@AuthorizeAction(roles = { "admin" }, action = Action.RENDER)
+	private class InvisibleLabel extends Label {
+
+		public InvisibleLabel(String id, Serializable label) {
+			super(id, label);
+		}
+	}
+
+	@AuthorizeAction(roles = { "admin" }, action = Action.RENDER)
+	private class InvisibleOrderByBorder extends OrderByBorder {
+
+		public InvisibleOrderByBorder(String id, Object property, ISortStateLocator stateLocator) {
+			super(id, property, stateLocator);
+		}
+	}
+
+	@AuthorizeAction(roles = { "admin" }, action = Action.RENDER)
+	private class InvisibleLink<Void> extends Link<Void> {
+
+		public InvisibleLink(String id) {
+			super(id);
+		}
+
+		@Override
+		public void onClick() {
 		}
 	}
 

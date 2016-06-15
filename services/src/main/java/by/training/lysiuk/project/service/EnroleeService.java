@@ -36,4 +36,6 @@ public interface EnroleeService {
 
 	List<Enrolee> getEnroleesByPlanSet(PlanSet planSet);
 
+	Enrolee getByIdentificationNumber(String value);
+
 }

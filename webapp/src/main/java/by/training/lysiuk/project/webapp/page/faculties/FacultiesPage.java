@@ -1,6 +1,7 @@
 package by.training.lysiuk.project.webapp.page.faculties;
 
 import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 
 import by.training.lysiuk.project.datamodel.Faculty;
 import by.training.lysiuk.project.webapp.page.AbstractPage;
@@ -18,5 +19,6 @@ public class FacultiesPage extends AbstractPage {
 				setResponsePage(new FacultyEditPage(new Faculty()));
 			}
 		});
+		add(new FeedbackPanel("feedback"));
 	}
 }

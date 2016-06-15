@@ -12,7 +12,7 @@
 				<th><a wicket:id="sort-registred"><wicket:message
 							key="table.date of registration" /></a></th>
 				<th><wicket:message key="table.identification number" /></th>
-				<th><wicket:message key="table.phone number" /></th>
+				<th><wicket:message key="phone number" /></th>
 				<th><wicket:message key="table.faculty" /></th>
 				<th><wicket:message key="table.subject" /></th>
 				<th><wicket:message key="table.points" /></th>
@@ -40,13 +40,15 @@
 				<td><span wicket:id="points2" /></td>
 				<td><span wicket:id="subject3" /></td>
 				<td><span wicket:id="points3" /></td>
-				<td><span wicket:id="certificate" /></td>
-				<td><a wicket:id="delete-link"><wicket:message key="table.delete"/></a>/<a
-					wicket:id="edit-link"><wicket:message key="table.edit"/></a></td>
+				<td class="column-3"><span wicket:id="certificate" /></td>
+				<td class="column-1"><a wicket:message="title:delete.title"
+					wicket:id="delete-link"> <img src="delete.png" width="15"
+						height="15">
+				</a> <a wicket:message="title:edit.title" wicket:id="edit-link"><img
+						src="edit.png" width="13" height="13"></a></td>
 			</tr>
 		</tbody>
 	</table>
-	<div wicket:id="paging"></div>
-
+	<div class="btn" wicket:id="paging"></div>
 </wicket:panel>
 

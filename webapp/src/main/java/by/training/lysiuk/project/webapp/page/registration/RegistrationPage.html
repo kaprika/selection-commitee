@@ -1,8 +1,5 @@
-
 <wicket:extend>
-	<h2>RegistrationPage</h2>
-
-	<form wicket:id="form">
+	<form class="form-margin" wicket:id="form">
 
 		<table>
 			<tr>
@@ -33,53 +30,33 @@
 				<td><b><wicket:message key="table.faculty" />:</b></td>
 				<td><select wicket:id="planSet"></select></td>
 			</tr>
-				<tr>
-					<td><span wicket:id="subject1"></span></td>
-					<td><input type="text" wicket:id="first points" /></td>
-				</tr>
-			<tr>
+			<tr height="45px">
+				<td><span wicket:id="subject1"></span></td>
+				<td><input type="text" wicket:id="first points" /></td>
+			</tr>
+			<tr height="45px">
 				<td><span wicket:id="subject2"></span></td>
 				<td><input type="text" wicket:id="second points" /></td>
 			</tr>
-			<tr>
+			<tr height="50px">
 				<td><span wicket:id="subject3"></span></td>
 				<td><input type="text" wicket:id="third points" /></td>
 			</tr>
 
-
-			<!-- 	<tr>
-				<td><b>Subject 2:</b></td>
-				<td><input type="text" wicket:id="second subject" /></td>
-			</tr>
-			<tr>
-				<td><b>Subject 3:</b></td>
-				<td><input type="text" wicket:id="third subject" /></td>
-			</tr>
-			-->
-			<tr>
-				<td></td>
-				<!-- 
-				 	<td><input type="text"
-					wicket:id="scoresInSubjects.0.getSubject().getName()" /></td>
-				-->
-				<td></td>
-			</tr>
-
-
-			<tr>
-				<td><button type="submit" wicket:id="save">
-						<wicket:message key="btn.save" />
-					</button></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td><button type="button" wicket:id="cancel">
-						<wicket:message key="btn.cancel" />
-					</button></td>
-				<td></td>
-			</tr>
-
 		</table>
+
+		<div class="btn">
+			<p>
+				<button type="submit" wicket:id="save">
+					<wicket:message key="btn.save" />
+				</button>
+			</p>
+			<p>
+				<button type="button" wicket:id="cancel">
+					<wicket:message key="btn.cancel" />
+				</button>
+			</p>
+		</div>
 	</form>
 
 	<div wicket:id="feedback"></div>

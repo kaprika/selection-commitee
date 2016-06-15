@@ -19,20 +19,6 @@ public class MenuPanelLoggedUser extends MenuPanel {
 	protected void onInitialize() {
 		super.onInitialize();
 
-		add(new Link("link-plans set") {
-			@Override
-			public void onClick() {
-				setResponsePage(new PlanSetPage());
-			}
-		});
-
-		add(new Link("link-this year plans set") {
-			@Override
-			public void onClick() {
-				setResponsePage(new PlanSetThisYearPage());
-			}
-		});
-
 		add(new Link("link-logout") {
 			@Override
 			public void onClick() {

@@ -1,27 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-	<entry key="btn.create.product">Create product</entry>
-
-	<entry key="menu.home">Home</entry>
-	<entry key="menu.products">Products</entry>
-	<entry key="menu.attributes">Attributes</entry>
-	<entry key="menu.users">Users</entry>
-
-
 	<entry key="loging.err.auth">authorization error</entry>
-
-	<entry key="product.saved">Product saved</entry>
-
-
-	<entry key="products.price">Base price</entry>
-
 	<entry key="US">English</entry>
 	<entry key="RU">Russian</entry>
-
-	<entry key="products.basePrice.title">enter price</entry>
-
-	<entry key="menu.plan set">Plan set-2016</entry>
 	<entry key="menu.competition">Competition</entry>
 	<entry key="menu.plans set this year">All faculties</entry>
 	<entry key="menu.open plans set">Open plans set</entry>
@@ -48,7 +30,8 @@
 	<entry key="table.last name">Last name</entry>
 	<entry key="table.first name">First name</entry>
 	<entry key="table.identification number">Identification number</entry>
-	<entry key="table.phone number">Phone number</entry>
+	<entry key="table.phone number">Phone number (+375-**-***-**-**)</entry>
+	<entry key="phone number">Phone number</entry>
 	<entry key="table.email">Email</entry>
 	<entry key="table.certificate">Certificate</entry>
 	<entry key="table.score1">Scores in subject-1</entry>
@@ -96,17 +79,21 @@
 
 	<entry key="login.password">Password</entry>
 
+	<entry key="delete.title">Delete</entry>
+	<entry key="edit.title">Edit</entry>
 
-
-
-
-
-
-
-
-
-
-
-
+	<entry key="registration.err">Applicant already recorded in the current year</entry>
+	<entry key="faculty.err">Such faculty already exists</entry>
+	<entry key="subject.err">Such subject already exists</entry>
+	<entry key="planSet.err">It must be selected 3 subjects</entry>
+	<entry key="subject.error">The subject can not be deleted</entry>
+	<entry key="faculty.error">The faculty can not be deleted</entry>
+	<entry key="planSet.error">The set plan can not be deleted</entry>
+	<entry key="planSet.date error">Enter the correct date</entry>
+	<entry key="planSet.exists">Recruitment plan at the faculty already in the current
+		year</entry>
+	<entry key="registration.success">Applicant is registered</entry>
+	<entry key="email.err">Incorrect email</entry>
+	<entry key="phone.err">Incorrect phone number</entry>
 
 </properties>

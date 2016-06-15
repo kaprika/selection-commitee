@@ -32,12 +32,6 @@ public abstract class AbstractPage extends WebPage {
 
 		add(new LanguageSelectionComponent("language-select"));
 
-		add(new Link("link-enrolee") {
-			@Override
-			public void onClick() {
-				setResponsePage(new HomePage());
-			}
-		});
 		/*
 		 * if (getPage().getClass().equals(HomePage.class)) { add(new
 		 * MenuPanelHome("menu-panel")); } else { add(new

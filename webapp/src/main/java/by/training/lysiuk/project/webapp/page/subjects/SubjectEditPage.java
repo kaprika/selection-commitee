@@ -60,7 +60,7 @@ public class SubjectEditPage extends AbstractPage {
 
 		add(new FeedbackPanel("feedback"));
 
-		add(new Link("cancel") {
+		form.add(new Link("cancel") {
 
 			@Override
 			public void onClick() {
@@ -78,7 +78,7 @@ public class SubjectEditPage extends AbstractPage {
 			Subject subject = subjectService.getByName(validatable.getValue());
 			if (subject != null) {
 				ValidationError error = new ValidationError();
-				error.setMessage(getClass().getSimpleName() + " already exists");
+				error.setMessage(getString("subject.err"));
 				validatable.error(error);
 			}
 		}

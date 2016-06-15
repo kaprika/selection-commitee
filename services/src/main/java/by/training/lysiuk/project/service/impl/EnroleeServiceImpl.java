@@ -41,7 +41,7 @@ public class EnroleeServiceImpl extends AbstractDaoImpl<Enrolee, Long> implement
 
 	@Inject
 	private ScoresInSubjectsDao scoresDao;
-	
+
 	@Inject
 	private ScoresInSubjectsService scoresService;
 
@@ -146,6 +146,41 @@ public class EnroleeServiceImpl extends AbstractDaoImpl<Enrolee, Long> implement
 		TypedQuery<Enrolee> q = em.createQuery(cq);
 		return q.getResultList();
 
+	}
+
+	@Override
+	public Enrolee getByIdentificationNumber(String value) {
+		EntityManager em = getEntityManager();
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Enrolee> cq = cb.createQuery(Enrolee.class);
+		Root<Enrolee> from = cq.from(Enrolee.class);
+		Date fromDate = new Date();
+		Date toDate = new Date();
+		fromDate.setMonth(0);
+		fromDate.setDate(1);
+		toDate.setMonth(11);
+		toDate.setDate(31);
+		fromDate.setHours(0);
+		fromDate.setMinutes(0);
+		fromDate.setSeconds(0);
+		toDate.setMinutes(23);
+		toDate.setSeconds(59);
+		toDate.setHours(59);
+		Predicate startDateGreaterThanOrEqualCondition = cb.greaterThanOrEqualTo(from.get(Enrolee_.dateOfRegistration),
+				fromDate);
+		Predicate endDateLessThanOrEqualCondition = cb.lessThanOrEqualTo(from.get(Enrolee_.dateOfRegistration), toDate);
+		Predicate identificationNumberEqualCondition = cb.equal(from.get(Enrolee_.identificationNumber), value);
+
+		cq.select(from).where(cb.and(startDateGreaterThanOrEqualCondition, endDateLessThanOrEqualCondition,
+				identificationNumberEqualCondition));
+		TypedQuery<Enrolee> q = em.createQuery(cq);
+
+		List<Enrolee> enrolees = q.getResultList();
+		if (enrolees.isEmpty()) {
+			return null;
+		} else {
+			return enrolees.get(0);
+		}
 	}
 
 }

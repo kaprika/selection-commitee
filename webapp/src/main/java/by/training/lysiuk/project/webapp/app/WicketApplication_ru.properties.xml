@@ -1,27 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-	<entry key="btn.create.product">Создать продукт</entry>
-
-	<entry key="menu.home">Домашняя</entry>
-	<entry key="menu.products">Продукты</entry>
-	<entry key="menu.attributes">Атрибуты</entry>
-	<entry key="menu.users">Пользователи</entry>
-
-
-	<entry key="loging.err.auth">ошибка авторизации</entry>
-
-	<entry key="product.saved">Продукт сохранен</entry>
-
-
-	<entry key="products.price">Базовая цена</entry>
-
+	<entry key="loging.err.auth">Ошибка авторизации</entry>
 	<entry key="US">Английский</entry>
 	<entry key="RU">Русский</entry>
-
-	<entry key="products.basePrice.title">введите цену</entry>
-
-	<entry key="menu.plan set">План набора-2016</entry>
 	<entry key="menu.competition">Конкурс</entry>
 	<entry key="menu.plans set this year">Все факультеты</entry>
 	<entry key="menu.open plans set">Открытые наборы</entry>
@@ -48,7 +30,8 @@
 	<entry key="table.last name">Фамилия</entry>
 	<entry key="table.first name">Имя</entry>
 	<entry key="table.identification number">Личный номер</entry>
-	<entry key="table.phone number">Номер телефона</entry>
+	<entry key="table.phone number">Номер телефона (+375-**-***-**-**)</entry>
+	<entry key="phone number">Номер телефона</entry>
 	<entry key="table.email">Email</entry>
 	<entry key="table.certificate">Аттестат</entry>
 	<entry key="table.score1">Баллы по предмету-1</entry>
@@ -97,22 +80,21 @@
 
 	<entry key="login.password">Пароль</entry>
 
+	<entry key="delete.title">Удалить</entry>
+	<entry key="edit.title">Редактировать</entry>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	<entry key="registration.err">Абитуриент уже регистрировался в текущем году</entry>
+	<entry key="faculty.err">Такой факультет уже существует</entry>
+	<entry key="subject.err">Такой предмет уже существует</entry>
+	<entry key="planSet.err">Должно быть выбрано 3 предмета</entry>
+	<entry key="subject.error">Предмет не может быть удалён</entry>
+	<entry key="faculty.error">Факультет не может быть удалён</entry>
+	<entry key="planSet.error">План набора не может быть удалён</entry>
+	<entry key="planSet.date error">Укажите верные даты</entry>
+	<entry key="planSet.exists">План набора на данный факультет уже есть в текущем
+		году</entry>
+	<entry key="registration.success">Абитуриент зарегистрирован</entry>
+	<entry key="email.err">Неверный email</entry>
+	<entry key="phone.err">Неверный номер телефона</entry>
 
 </properties>

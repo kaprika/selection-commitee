@@ -43,7 +43,7 @@ public class EnrolleeListPanel extends Panel {
 		super(id);
 
 		EnrolleesDataProvider enrolleesDataProvider = new EnrolleesDataProvider();
-		DataView<Enrolee> dataView = new DataView<Enrolee>("rows", enrolleesDataProvider, 15) {
+		DataView<Enrolee> dataView = new DataView<Enrolee>("rows", enrolleesDataProvider, 10) {
 			@Override
 			protected void populateItem(Item<Enrolee> item) {
 				Enrolee enrolee = item.getModelObject();
@@ -75,14 +75,6 @@ public class EnrolleeListPanel extends Panel {
 				item.add(new Label("points3", thirdScore.getPoints()));
 				
 				
-				
-				/*Subject firstSubject = enrolee.getPlanSet().getSubjects().get(0);
-				item.add(new Label("subject1", firstSubject.getName()));
-				Subject secondSubject = enrolee.getPlanSet().getSubjects().get(1);
-				item.add(new Label("subject2", secondSubject.getName()));
-				Subject thirdSubject = enrolee.getPlanSet().getSubjects().get(2);
-				item.add(new Label("subject3", thirdSubject.getName()));
-				*/
 				item.add(new Label("certificate", enrolee.getCertificate()));
 
 		

@@ -18,14 +18,13 @@
 	</Appenders>
 	<Loggers>
 
-		<Logger name="by.training.lysiuk.project.dataaccess"
-			level="DEBUG" additivity="false">
+		<Logger name="by.training.lysiuk.project.dataaccess" level="DEBUG"
+			additivity="false">
 			<AppenderRef ref="CONSOLE" />
 		</Logger>
 
-
-		<Logger name="by.training.lysiuk.project.service"
-			level="WARN" additivity="false">
+		<Logger name="by.training.lysiuk.project.service" level="WARN"
+			additivity="false">
 			<AppenderRef ref="CONSOLE" />
 			<AppenderRef ref="SERVER_LOGFILE" />
 		</Logger>

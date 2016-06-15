@@ -1,4 +1,4 @@
-body, p, li, a { font-family: georgia, times, serif;font-size:13pt;}
+body, p, li, a { font-family: georgia, times, serif;font-size:12pt;}
 h1, h2, h3 { font-family: 'Yanone Kaffeesatz', arial, serif; }
 body { margin:0;padding:0;}
 #hd {
@@ -17,7 +17,7 @@ body { margin:0;padding:0;}
 	height : 99px;
 	background-color : #6493D2;
 	border-top : 1px solid #888;
-	z-index : -5;
+	z-index : -3;
 	text-align: center;
 	
 	position: fixed;/*absolute;*/
@@ -25,6 +25,7 @@ body { margin:0;padding:0;}
 
 .content{
 	padding: 0 10px;
+	/**/margin-bottom: 120px;
 }
 #logo,#bd {
 	width : 650px;
@@ -63,7 +64,7 @@ body { margin-top : 0; padding-top : 0;}
 }
 */
 a, a:visited, a:hover, a:active {
-	color : #6493D2;
+	color : #DC143C;
 }
 h2 {
 	padding : 0; margin:0;

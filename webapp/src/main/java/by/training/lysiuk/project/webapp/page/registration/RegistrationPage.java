@@ -3,10 +3,11 @@ package by.training.lysiuk.project.webapp.page.registration;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
-import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.event.Broadcast;
@@ -23,6 +24,9 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.validation.IValidatable;
+import org.apache.wicket.validation.IValidator;
+import org.apache.wicket.validation.ValidationError;
 import org.apache.wicket.validation.validator.RangeValidator;
 
 import by.training.lysiuk.project.dataaccess.filters.PlanSetFilter;
@@ -81,16 +85,19 @@ public class RegistrationPage extends AbstractPage {
 		TextField<String> identificationNumberField = new TextField<>("identificationNumber");
 		identificationNumberField.setLabel(new ResourceModel("table.identification number"));
 		identificationNumberField.setRequired(true);
+		identificationNumberField.add(new UniqueIdentificatorNumberValidator());
 		form.add(identificationNumberField);
 
 		TextField<String> phoneNumberField = new TextField<>("phoneNumber");
 		phoneNumberField.setLabel(new ResourceModel("table.phone number"));
 		phoneNumberField.setRequired(true);
+		phoneNumberField.add(new PhoneNumberValidator());
 		form.add(phoneNumberField);
 
 		TextField<String> emailField = new TextField<>("email");
 		emailField.setLabel(new ResourceModel("table.email"));
 		emailField.setRequired(true);
+		emailField.add(new EmailValidator());
 		form.add(emailField);
 
 		Label firstSubject = new Label("subject1", new Model<String>()) {
@@ -225,8 +232,9 @@ public class RegistrationPage extends AbstractPage {
 				scoresInSubjects.get(2).setEnrolee(enrolee);
 				enrolee.setDateOfRegistration(new Date());
 				enroleeService.saveOrUpdateEnroleeWithPoints(enrolee, scoresInSubjects);
-
-				setResponsePage(new HomePage());
+				HomePage page = new HomePage();
+				page.info(getString("registration.success"));
+				setResponsePage(page);
 			}
 		});
 
@@ -240,17 +248,50 @@ public class RegistrationPage extends AbstractPage {
 		});
 
 	}
-	/*
-	 * private class UniqueNameValidator implements IValidator<String> {
-	 * 
-	 * @Override public void validate(IValidatable<String> validatable) {
-	 * 
-	 * Faculty faculty = facultyService.getByName(validatable.getValue()); if
-	 * (faculty != null) { ValidationError error = new ValidationError();
-	 * error.setMessage(getClass().getSimpleName() + " already exists");
-	 * validatable.error(error); } }
-	 * 
-	 * }
-	 */
+
+	private class UniqueIdentificatorNumberValidator implements IValidator<String> {
+
+		@Override
+		public void validate(IValidatable<String> validatable) {
+
+			Enrolee enrolee = enroleeService.getByIdentificationNumber(validatable.getValue());
+			if (enrolee != null) {
+				ValidationError error = new ValidationError();
+				error.setMessage(getString("registration.err"));
+				validatable.error(error);
+			}
+		}
+
+	}
+
+	private class EmailValidator implements IValidator<String> {
+
+		@Override
+		public void validate(IValidatable<String> validatable) {
+			String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+			Pattern p = Pattern.compile(ePattern);
+			Matcher m = p.matcher(validatable.getValue());
+			if (!m.matches()) {
+				ValidationError error = new ValidationError();
+				error.setMessage(getString("email.err"));
+				validatable.error(error);
+			}
+		}
+	}
+
+	private class PhoneNumberValidator implements IValidator<String> {
+
+		@Override
+		public void validate(IValidatable<String> validatable) {
+			String phonePattern = "^\\+375-[1-9]{2}-[0-9]{3}-[0-9]{2}-[0-9]{2}$";
+			Pattern p = Pattern.compile(phonePattern);
+			Matcher m = p.matcher(validatable.getValue());
+			if (!m.matches()) {
+				ValidationError error = new ValidationError();
+				error.setMessage(getString("phone.err"));
+				validatable.error(error);
+			}
+		}
+	}
 
 }

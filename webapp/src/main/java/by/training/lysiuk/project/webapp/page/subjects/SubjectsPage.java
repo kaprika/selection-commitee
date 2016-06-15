@@ -1,6 +1,7 @@
 package by.training.lysiuk.project.webapp.page.subjects;
 
 import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 
 import by.training.lysiuk.project.datamodel.Subject;
 import by.training.lysiuk.project.webapp.page.AbstractPage;
@@ -18,5 +19,7 @@ public class SubjectsPage extends AbstractPage {
 				setResponsePage(new SubjectEditPage(new Subject()));
 			}
 		});
+
+		add(new FeedbackPanel("feedback"));
 	}
 }

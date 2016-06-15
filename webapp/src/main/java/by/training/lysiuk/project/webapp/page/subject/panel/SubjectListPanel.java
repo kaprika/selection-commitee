@@ -35,21 +35,13 @@ public class SubjectListPanel extends Panel {
 		super(id);
 
 		SubjectsDataProvider subjectsDataProvider = new SubjectsDataProvider();
-		DataView<Subject> dataView = new DataView<Subject>("rows", subjectsDataProvider, 15) {
+		DataView<Subject> dataView = new DataView<Subject>("rows", subjectsDataProvider, 10) {
 			@Override
 			protected void populateItem(Item<Subject> item) {
 				Subject subject = item.getModelObject();
 
 				item.add(new Label("id", subject.getId()));
 				item.add(new Label("name", subject.getName()));
-				// item.add(new Label("price", product.getBasePrice()));
-				// item.add(DateLabel.forDatePattern("created",
-				// Model.of(product.getCreated()), "dd-MM-yyyy"));
-
-				// CheckBox checkbox = new CheckBox("active",
-				// Model.of(product.getActive()));
-				// checkbox.setEnabled(false);
-				// item.add(checkbox);
 				item.add(new Link<Void>("edit-link") {
 					@Override
 					public void onClick() {
@@ -59,25 +51,22 @@ public class SubjectListPanel extends Panel {
 				item.add(new Link<Void>("delete-link") {
 					@Override
 					public void onClick() {
+						SubjectsPage page = new SubjectsPage();
 						try {
 							subjectService.delete(subject);
 						} catch (PersistenceException e) {
-							System.out.println("caughth persistance exception");
+							page.error(getString("subject.error"));
+						} finally {
+							setResponsePage(page);
 						}
-
-						setResponsePage(new SubjectsPage());
 					}
 				});
 			}
 		};
 		add(dataView);
 		add(new PagingNavigator("paging", dataView));
-
 		add(new OrderByBorder("sort-id", Subject_.id, subjectsDataProvider));
 		add(new OrderByBorder("sort-name", Subject_.name, subjectsDataProvider));
-
-		// add(new OrderByBorder("sort-price", Product_.basePrice,
-		// facultiesDataProvider));
 
 	}
 

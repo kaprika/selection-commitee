@@ -45,7 +45,9 @@ public class PlanSetServiceTest {
 	@Test
 	public void testCountByYearAndFaculty() {
 		Date date = new Date();
-		Long count = planSetService.countByYearAndFaculty(date, "math");
+		PlanSetFilter filter = new PlanSetFilter();
+		filter.setFacultyName("math");
+		Long count = planSetService.countByYearAndFaculty(filter);
 		// System.out.println(count);
 	}
 
@@ -72,19 +74,23 @@ public class PlanSetServiceTest {
 		Date date = new Date(0);
 		List<PlanSet> planSetList = planSetService.getByCurrentYear(planSetFilter);
 		for (PlanSet planSet : planSetList) {
-		//	System.out.println(planSet.getStartDateSet());
+			// System.out.println(planSet.getStartDateSet());
 		}
-		//System.out.println(planSetList.size());
+		// System.out.println(planSetList.size());
 	}
 
 	@Test
 	public void GetClosedCompetitionListTest() {
 
-/*		List<PlanSet> planSeteList = planSetService.getClosedPlansSet(startDate, endDate);
-		for (PlanSet planSet : planSeteList) {
-			System.out.println(planSet.getStartDateSet() + " " + planSet.getEndDateSet() + " " +planSet.getFaculty().getName());
-			
-		}*/
+		/*
+		 * List<PlanSet> planSeteList =
+		 * planSetService.getClosedPlansSet(startDate, endDate); for (PlanSet
+		 * planSet : planSeteList) {
+		 * System.out.println(planSet.getStartDateSet() + " " +
+		 * planSet.getEndDateSet() + " " +planSet.getFaculty().getName());
+		 * 
+		 * }
+		 */
 	}
 
 }

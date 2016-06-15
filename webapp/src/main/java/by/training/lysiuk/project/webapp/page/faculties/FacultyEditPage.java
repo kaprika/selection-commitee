@@ -47,19 +47,6 @@ public class FacultyEditPage extends AbstractPage {
 		nameField.add(new UniqueNameValidator());
 		form.add(nameField);
 	
-		/*
-		 * TextField<Double> basePriceField = new TextField<>("basePrice");
-		 * basePriceField.add(RangeValidator.<Double> range(0d, 1_000_000d));
-		 * basePriceField.setRequired(true);
-		 * 
-		 * DateTextField createdField = new DateTextField("created");
-		 * createdField.add(new DatePicker()); createdField.setRequired(true);
-		 * form.add(createdField);
-		 * 
-		 * form.add(basePriceField);
-		 * 
-		 * CheckBox activeField = new CheckBox("active"); form.add(activeField);
-		 */
 		form.add(new SubmitLink("save") {
 			@Override
 			public void onSubmit() {
@@ -71,7 +58,7 @@ public class FacultyEditPage extends AbstractPage {
 
 		add(new FeedbackPanel("feedback"));
 
-		add(new Link("cancel") {
+		form.add(new Link("cancel") {
 
 			@Override
 			public void onClick() {
@@ -89,7 +76,7 @@ public class FacultyEditPage extends AbstractPage {
 			Faculty faculty = facultyService.getByName(validatable.getValue());
 			if (faculty != null) {
 				ValidationError error = new ValidationError();
-				error.setMessage(getClass().getSimpleName() + " already exists");
+				error.setMessage(getString("faculty.err"));
 				validatable.error(error);
 			}
 		}

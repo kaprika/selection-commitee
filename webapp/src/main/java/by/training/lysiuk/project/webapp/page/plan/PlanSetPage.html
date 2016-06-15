@@ -1,5 +1,12 @@
 <wicket:extend>
-	<h2>PlanSetPage</h2>
-	<div wicket:id="list-panel"></div>
-	<button wicket:id="create"><wicket:message key="btn.create plan set"/></button>
+	<div class="div-margin" wicket:id="list-panel"></div>
+	<br />
+	<wicket:enclosure child="create">
+		<div class="btn">
+			<button wicket:id="create">
+				<wicket:message key="btn.create plan set" />
+			</button>
+		</div>
+	</wicket:enclosure>
+	<div class="div-margin" wicket:id="feedback"></div>
 </wicket:extend>

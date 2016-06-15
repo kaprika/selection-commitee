@@ -60,55 +60,22 @@ public class CompetitionListPanel extends Panel {
 			}
 		};
 		add(dataView);
-		add(new PagingNavigator("paging", dataView));
-		// добавить пагинацию
-		/*
-		 * add(new OrderByBorder("sort-id", PlanSet_.id, planSetDataProvider));
-		 * add(new OrderByBorder("sort-start date set", PlanSet_.startDateSet,
-		 * planSetDataProvider)); add(new OrderByBorder("sort-plan",
-		 * PlanSet_.plan, planSetDataProvider)); add(new OrderByBorder(
-		 * "sort-end date set", PlanSet_.endDateSet, planSetDataProvider));
-		 * add(new OrderByBorder("sort-price", Product_.basePrice,
-		 * facultiesDataProvider));
-		 */
-
 	}
 
 	private class CompetitionDataProvider extends SortableDataProvider<Competition, Serializable> {
 
-		// private PlanSetFilter planSetFilter;
-
 		public CompetitionDataProvider() {
 			super();
-			// planSetFilter = new PlanSetFilter();
-			// planSetFilter.setFetchFaculty(true);
-			// planSetFilter.setFetchSubjects(true);
-			// setSort((Serializable) PlanSet_.startDateSet,
-			// SortOrder.DESCENDING);
 		}
 
 		@Override
 		public Iterator<Competition> iterator(long first, long count) {
-			/*
-			 * Serializable property = getSort().getProperty(); SortOrder
-			 * propertySortOrder =
-			 * getSortState().getPropertySortOrder(property);
-			 * 
-			 * planSetFilter.setSortProperty((SingularAttribute) property);
-			 * planSetFilter.setSortOrder(propertySortOrder.equals(SortOrder.
-			 * ASCENDING) ? true : false);
-			 * 
-			 * planSetFilter.setLimit((int) count);
-			 * planSetFilter.setOffset((int) first); return
-			 * planSetService.find(planSetFilter).iterator();
-			 */
 			return competitionService.competitionListByCurrentDate().iterator();
 		}
 
 		@Override
 		public long size() {
 			return competitionService.competitionListByCurrentDate().size();
-			// planSetService.count(planSetFilter);
 		}
 
 		@Override

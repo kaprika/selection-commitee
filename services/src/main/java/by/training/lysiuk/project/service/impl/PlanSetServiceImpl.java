@@ -2,7 +2,6 @@ package by.training.lysiuk.project.service.impl;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -14,6 +13,7 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.hibernate.jpa.criteria.OrderImpl;
 import org.springframework.stereotype.Service;
 
@@ -75,14 +75,30 @@ public class PlanSetServiceImpl extends AbstractDaoImpl<PlanSet, Long> implement
 	}
 
 	@Override
-	public Long countByYearAndFaculty(Date date, String faculty) {
+	public Long countByYearAndFaculty(PlanSetFilter filter) {
 		EntityManager em = getEntityManager();
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
 		Root<PlanSet> from = cq.from(PlanSet.class);
-		Predicate yearEqualCondition = cb.equal(from.get(PlanSet_.startDateSet), date);
-		Predicate facultyEqualCondition = cb.equal(from.join(PlanSet_.faculty).get(Faculty_.name), faculty);
-		cq.select(cb.count(from)).where(cb.and(yearEqualCondition, facultyEqualCondition));
+		Date fromDate = new Date();
+		Date toDate = new Date();
+		fromDate.setMonth(0);
+		fromDate.setDate(1);
+		toDate.setMonth(11);
+		toDate.setDate(31);
+		fromDate.setHours(0);
+		fromDate.setMinutes(0);
+		fromDate.setSeconds(0);
+		toDate.setMinutes(23);
+		toDate.setSeconds(59);
+		toDate.setHours(59);
+		Predicate startDateGreaterThanOrEqualCondition = cb.greaterThanOrEqualTo(from.get(PlanSet_.startDateSet),
+				fromDate);
+		Predicate endDateLessThanOrEqualCondition = cb.lessThanOrEqualTo(from.get(PlanSet_.endDateSet), toDate);
+		Predicate facultyEqualCondition = cb.equal(from.join(PlanSet_.faculty).get(Faculty_.name),
+				filter.getFacultyName());
+		cq.select(cb.count(from)).where(
+				cb.and(startDateGreaterThanOrEqualCondition, endDateLessThanOrEqualCondition, facultyEqualCondition));
 		TypedQuery<Long> q = em.createQuery(cq);
 		return q.getSingleResult();
 	}
@@ -93,20 +109,22 @@ public class PlanSetServiceImpl extends AbstractDaoImpl<PlanSet, Long> implement
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<PlanSet> cq = cb.createQuery(PlanSet.class);
 		Root<PlanSet> from = cq.from(PlanSet.class);
-
 		from.fetch(PlanSet_.faculty, JoinType.LEFT);
 		from.fetch(PlanSet_.subjects, JoinType.LEFT);
 		Date currentDate = new Date();
-		Predicate startDateLessThanOrEqualCondition = cb.lessThanOrEqualTo(from.get(PlanSet_.startDateSet), currentDate);
-		Predicate endDateGreatThanOrEqualCondition = cb.greaterThanOrEqualTo(from.get(PlanSet_.endDateSet), currentDate);
-		cq.select(from).where(cb.and(startDateLessThanOrEqualCondition, endDateGreatThanOrEqualCondition)).distinct(true);
+		Predicate startDateLessThanOrEqualCondition = cb.lessThanOrEqualTo(from.get(PlanSet_.startDateSet),
+				currentDate);
+		Predicate endDateGreatThanOrEqualCondition = cb.greaterThanOrEqualTo(from.get(PlanSet_.endDateSet),
+				currentDate);
+		cq.select(from).where(cb.and(startDateLessThanOrEqualCondition, endDateGreatThanOrEqualCondition))
+				.distinct(true);
 		if (filter.getSortProperty() != null) {
 			cq.orderBy(new OrderImpl(from.get(filter.getSortProperty()), filter.isSortOrder()));
 		}
 		TypedQuery<PlanSet> q = em.createQuery(cq);
 		return q.getResultList();
 	}
-	
+
 	@Override
 	public List<PlanSet> getByCurrentYear(PlanSetFilter filter) {
 		EntityManager em = getEntityManager();
@@ -116,22 +134,28 @@ public class PlanSetServiceImpl extends AbstractDaoImpl<PlanSet, Long> implement
 
 		from.fetch(PlanSet_.faculty, JoinType.LEFT);
 		from.fetch(PlanSet_.subjects, JoinType.LEFT);
-		Date startDate = new Date();
-		Date endDate = new Date();
-		startDate.setMonth(0);
-		startDate.setDate(1);
-		endDate.setMonth(11);
-		endDate.setDate(31);
-		startDate.setHours(0);
-		startDate.setMinutes(0);
-		startDate.setSeconds(0);
-		endDate.setMinutes(0);
-		endDate.setSeconds(0);
-		endDate.setHours(0);
+		Date fromDate = new Date();
+		Date toDate = new Date();
+		fromDate.setMonth(0);
+		fromDate.setDate(1);
+		toDate.setMonth(11);
+		toDate.setDate(31);
+		fromDate.setHours(0);
+		fromDate.setMinutes(0);
+		fromDate.setSeconds(0);
+		toDate.setMinutes(23);
+		toDate.setSeconds(59);
+		toDate.setHours(59);
+		// Calendar fromDate = DateUtils.truncate(Calendar.getInstance(),
+		// Calendar.YEAR);
+		// Calendar toDate = DateUtils.truncate(Calendar.getInstance(),
+		// Calendar.YEAR);
+		Predicate startDateGreaterThanOrEqualCondition = cb.greaterThanOrEqualTo(from.get(PlanSet_.startDateSet),
+				fromDate);
+		Predicate endDateLessThanOrEqualCondition = cb.lessThanOrEqualTo(from.get(PlanSet_.endDateSet), toDate);
 
-		Predicate startDateGreaterThanOrEqualCondition = cb.greaterThanOrEqualTo(from.get(PlanSet_.startDateSet), startDate);
-		Predicate endDateLessThanOrEqualCondition = cb.lessThanOrEqualTo(from.get(PlanSet_.endDateSet), endDate);
-		cq.select(from).where(cb.and(startDateGreaterThanOrEqualCondition, endDateLessThanOrEqualCondition)).distinct(true);
+		cq.select(from).where(cb.and(startDateGreaterThanOrEqualCondition, endDateLessThanOrEqualCondition))
+				.distinct(true);
 		if (filter.getSortProperty() != null) {
 			cq.orderBy(new OrderImpl(from.get(filter.getSortProperty()), filter.isSortOrder()));
 		}
@@ -145,17 +169,16 @@ public class PlanSetServiceImpl extends AbstractDaoImpl<PlanSet, Long> implement
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<PlanSet> cq = cb.createQuery(PlanSet.class);
 		Root<PlanSet> from = cq.from(PlanSet.class);
-
 		from.fetch(PlanSet_.faculty, JoinType.LEFT);
 		from.fetch(PlanSet_.subjects, JoinType.LEFT);
-
-		Predicate endDateGreaterThanOrEqualCondition = cb.greaterThanOrEqualTo(from.get(PlanSet_.endDateSet), filter.getStartDate());
-		Predicate endDateLessThanOrEqualCondition = cb.lessThanOrEqualTo(from.get(PlanSet_.endDateSet), filter.getEndDate());
-		cq.select(from).where(cb.and(endDateGreaterThanOrEqualCondition, endDateLessThanOrEqualCondition)).distinct(true);
+		Predicate endDateGreaterThanOrEqualCondition = cb.greaterThanOrEqualTo(from.get(PlanSet_.endDateSet),
+				filter.getStartDate());
+		Predicate endDateLessThanOrEqualCondition = cb.lessThanOrEqualTo(from.get(PlanSet_.endDateSet),
+				filter.getEndDate());
+		cq.select(from).where(cb.and(endDateGreaterThanOrEqualCondition, endDateLessThanOrEqualCondition))
+				.distinct(true);
 		TypedQuery<PlanSet> q = em.createQuery(cq);
 		return q.getResultList();
 	}
-	
-	
 
 }

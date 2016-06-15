@@ -26,9 +26,11 @@ import org.apache.wicket.validation.IValidator;
 import org.apache.wicket.validation.ValidationError;
 import org.apache.wicket.validation.validator.RangeValidator;
 
+import by.training.lysiuk.project.dataaccess.filters.PlanSetFilter;
 import by.training.lysiuk.project.datamodel.Faculty;
 import by.training.lysiuk.project.datamodel.PlanSet;
 import by.training.lysiuk.project.datamodel.Subject;
+import by.training.lysiuk.project.service.EnroleeService;
 import by.training.lysiuk.project.service.FacultyService;
 import by.training.lysiuk.project.service.PlanSetService;
 import by.training.lysiuk.project.service.SubjectService;
@@ -47,9 +49,18 @@ public class PlanSetEditPage extends AbstractPage {
 	@Inject
 	private FacultyService facultyService;
 
+	@Inject
+	private EnroleeService enroleeService;
+
 	private PlanSet planSet;
 
+	private boolean isEnabled;
+
+	private boolean isEnabledPlan;
+
 	private boolean createNew;
+
+	private PlanSetFilter filter;
 
 	public PlanSetEditPage(PageParameters parameters) {
 		super(parameters);
@@ -59,6 +70,22 @@ public class PlanSetEditPage extends AbstractPage {
 		super();
 		this.planSet = planSet;
 		this.createNew = createNew;
+		filter = new PlanSetFilter();
+		if (createNew) {
+			isEnabled = true;
+			isEnabledPlan = true;
+
+		} else {
+			boolean noEnrolees = enroleeService.getEnroleesByPlanSet(planSet).isEmpty();
+			boolean planSetIsActive = planSet.getEndDateSet().after(new Date());
+			if (noEnrolees && planSetIsActive) {
+				isEnabled = true;
+			} else {
+				isEnabled = false;
+			}
+			isEnabledPlan = planSetIsActive;
+		}
+
 	}
 
 	@Override
@@ -72,24 +99,28 @@ public class PlanSetEditPage extends AbstractPage {
 		startDateSetField.add(new DatePicker());
 		startDateSetField.setRequired(true);
 		startDateSetField.setLabel(new ResourceModel("table.start date set"));
+		startDateSetField.setEnabled(isEnabled);
 		form.add(startDateSetField);
 
 		DropDownChoice<Faculty> facultyField = new DropDownChoice<Faculty>("faculty", facultyService.getAll(),
 				FacultyChoiceRenderer.INSTANCE);
 		facultyField.setRequired(true);
 		facultyField.setLabel(new ResourceModel("table.faculty"));
+		facultyField.setEnabled(isEnabled);
 		form.add(facultyField);
 
 		TextField<Integer> planField = new TextField<>("plan");
 		planField.add(RangeValidator.<Integer> range(1, 1_000));
 		planField.setRequired(true);
 		planField.setLabel(new ResourceModel("table.plan"));
+		planField.setEnabled(isEnabledPlan);
 		form.add(planField);
 
 		DateTextField endDateSetField = new DateTextField("endDateSet");
 		endDateSetField.add(new DatePicker());
 		endDateSetField.setRequired(true);
 		endDateSetField.setLabel(new ResourceModel("table.end date set"));
+		endDateSetField.setEnabled(isEnabled);
 		form.add(endDateSetField);
 
 		List<Subject> allSubjects = subjectService.getAll();
@@ -99,6 +130,7 @@ public class PlanSetEditPage extends AbstractPage {
 		palette.setRequired(true);
 		palette.add(new SubjectsQuantityValidator());
 		palette.setLabel(new ResourceModel("table.subjects"));
+		palette.setEnabled(isEnabled);
 		form.add(palette);
 
 		form.add(new SubmitLink("save") {
@@ -107,13 +139,16 @@ public class PlanSetEditPage extends AbstractPage {
 				super.onSubmit();
 				if (planSet.getStartDateSet().equals(planSet.getEndDateSet())
 						|| planSet.getStartDateSet().after(planSet.getEndDateSet())) {
-					setResponsePage(new PlanSetEditPage(planSet, createNew));
+					PlanSetEditPage page = new PlanSetEditPage(planSet, createNew);
+					page.warn(getString("planSet.date error"));
+					setResponsePage(page);
 				} else {
-					// проверять только год
-					Date datePlanSet = planSet.getStartDateSet();
-					String facultyPlanSet = planSet.getFaculty().getName();
-					if (planSetService.countByYearAndFaculty(datePlanSet, facultyPlanSet) != 0 && createNew) {
-						setResponsePage(new PlanSetEditPage(planSet, true));
+					String faculty = planSet.getFaculty().getName();
+					filter.setFacultyName(faculty);
+					if (planSetService.countByYearAndFaculty(filter) != 0 && createNew) {
+						PlanSetEditPage page = new PlanSetEditPage(planSet, true);
+						page.warn(getString("planSet.exists"));
+						setResponsePage(page);
 					} else {
 						planSetService.saveOrUpdate(planSet);
 						setResponsePage(new PlanSetPage());
@@ -124,8 +159,7 @@ public class PlanSetEditPage extends AbstractPage {
 
 		add(new FeedbackPanel("feedback"));
 
-		add(new Link("cancel") {
-
+		form.add(new Link("cancel") {
 			@Override
 			public void onClick() {
 				setResponsePage(new PlanSetPage());
@@ -141,11 +175,10 @@ public class PlanSetEditPage extends AbstractPage {
 			int subjectsQuantity = validatable.getValue().size();
 			if (subjectsQuantity != 3) {
 				ValidationError error = new ValidationError();
-				error.setMessage(getClass().getSimpleName() + " select exactly three subjects");
+				error.setMessage(getString("planSet.err"));
 				validatable.error(error);
 			}
 		}
 
 	}
-
 }

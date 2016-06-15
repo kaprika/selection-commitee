@@ -2,32 +2,45 @@
 	<table class="list-table">
 		<thead>
 			<tr>
-				<th><a wicket:id="sort-id">id</a></th>
-				<th><a wicket:id="sort-start date set"><wicket:message key="table.start date set"/></a></th>
-				<th><a wicket:id="sort-end date set"><wicket:message key="table.end date set"/></a></th>
-				<th><wicket:message key="table.faculty"/></th>
-				<th><wicket:message key="table.subject1"/></th>
-				<th><wicket:message key="table.subject2"/></th>
-				<th><wicket:message key="table.subject3"/></th>
-				<th><a wicket:id="sort-plan"><wicket:message key="table.plan"/></a></th>
-				<th><wicket:message key="table.actions"/></th>
+				<wicket:enclosure child="sort-id">
+					<th><a wicket:id="sort-id">id</a></th>
+				</wicket:enclosure>
+				<th><a wicket:id="sort-start date set"><wicket:message
+							key="table.start date set" /></a></th>
+				<th><a wicket:id="sort-end date set"><wicket:message
+							key="table.end date set" /></a></th>
+				<th><wicket:message key="table.faculty" /></th>
+				<th><wicket:message key="table.subject1" /></th>
+				<th><wicket:message key="table.subject2" /></th>
+				<th><wicket:message key="table.subject3" /></th>
+				<th><a wicket:id="sort-plan"><wicket:message
+							key="table.plan" /></a></th>
+				<wicket:enclosure child="sort-id">
+					<th><wicket:message key="table.actions" /></th>
+				</wicket:enclosure>
 			</tr>
 		</thead>
 		<tbody>
 			<tr wicket:id="rows">
-				<td><span wicket:id="id" /></td>
-				<td><span wicket:id="start date set" /></td>
-				<td><span wicket:id="end date set" /></td>
-				<td><span wicket:id="faculty" /></td>
-				<td><span wicket:id="first subject" /></td>
-				<td><span wicket:id="second subject" /></td>
-				<td><span wicket:id="third subject" /></td>
-				<td><span wicket:id="plan" /></td>
-				<td><a wicket:id="delete-link"><wicket:message key="table.delete"/></a>/<a
-					wicket:id="edit-link"><wicket:message key="table.edit"/></a></td>
+				<wicket:enclosure child="id">
+					<td class="column-3"><span wicket:id="id" /></td>
+				</wicket:enclosure>
+				<td class="column-3"><span wicket:id="start date set" /></td>
+				<td class="column-3"><span wicket:id="end date set" /></td>
+				<td class="column-3"><span wicket:id="faculty" /></td>
+				<td class="column-3"><span wicket:id="first subject" /></td>
+				<td class="column-3"><span wicket:id="second subject" /></td>
+				<td class="column-3"><span wicket:id="third subject" /></td>
+				<td class="column-3"><span wicket:id="plan" /></td>
+				<wicket:enclosure child="delete-link">
+					<td class=><a wicket:message="title:delete.title"
+						wicket:id="delete-link"> <img src="delete.png" width="15"
+							height="15">
+					</a> <a wicket:message="title:edit.title" wicket:id="edit-link"><img
+							src="edit.png" width="13" height="13"></a></td>
+				</wicket:enclosure>
 			</tr>
 		</tbody>
 	</table>
-	<div wicket:id="paging"></div>
 
 </wicket:panel>

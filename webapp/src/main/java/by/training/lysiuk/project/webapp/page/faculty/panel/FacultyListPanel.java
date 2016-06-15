@@ -35,49 +35,39 @@ public class FacultyListPanel extends Panel {
 		super(id);
 
 		FacultiesDataProvider facultiesDataProvider = new FacultiesDataProvider();
-		DataView<Faculty> dataView = new DataView<Faculty>("rows", facultiesDataProvider, 15) {
+		DataView<Faculty> dataView = new DataView<Faculty>("rows", facultiesDataProvider, 10) {
 			@Override
 			protected void populateItem(Item<Faculty> item) {
 				Faculty faculty = item.getModelObject();
 
 				item.add(new Label("id", faculty.getId()));
 				item.add(new Label("name", faculty.getName()));
-				// item.add(new Label("price", product.getBasePrice()));
-				// item.add(DateLabel.forDatePattern("created",
-				// Model.of(product.getCreated()), "dd-MM-yyyy"));
-
-				// CheckBox checkbox = new CheckBox("active",
-				// Model.of(product.getActive()));
-				// checkbox.setEnabled(false);
-				// item.add(checkbox);
-				 item.add(new Link<Void>("edit-link") {
-	                    @Override
-	                    public void onClick() {
-	                        setResponsePage(new FacultyEditPage(faculty));
-	                    }
-	                });
-				 item.add(new Link<Void>("delete-link") {
-	                    @Override
-	                    public void onClick() {
-	                        try {
-	                            facultyService.delete(faculty);
-	                        } catch (PersistenceException e) {
-	                            System.out.println("caughth persistance exception");
-	                        }
-
-	                        setResponsePage(new FacultiesPage());
-	                    }
-	                });
+				item.add(new Link<Void>("edit-link") {
+					@Override
+					public void onClick() {
+						setResponsePage(new FacultyEditPage(faculty));
+					}
+				});
+				item.add(new Link<Void>("delete-link") {
+					@Override
+					public void onClick() {
+						FacultiesPage page = new FacultiesPage();
+						try {
+							facultyService.delete(faculty);
+						} catch (PersistenceException e) {
+							page.error(getString("faculty.error"));
+						} finally {
+							setResponsePage(page);
+						}
+					}
+				});
 			}
 		};
 		add(dataView);
 		add(new PagingNavigator("paging", dataView));
-		
+
 		add(new OrderByBorder("sort-id", Faculty_.id, facultiesDataProvider));
 		add(new OrderByBorder("sort-name", Faculty_.name, facultiesDataProvider));
-
-		// add(new OrderByBorder("sort-price", Product_.basePrice,
-		// facultiesDataProvider));
 
 	}
 
@@ -113,7 +103,6 @@ public class FacultyListPanel extends Panel {
 		public IModel<Faculty> model(Faculty object) {
 			return new Model(object);
 		}
-
 	}
 
 }

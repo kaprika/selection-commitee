@@ -25,6 +25,13 @@ public class MenuPanel extends Panel {
 	protected void onInitialize() {
 		super.onInitialize();
 
+		add(new Link("link-plans set") {
+			@Override
+			public void onClick() {
+				setResponsePage(new PlanSetPage());
+			}
+		});
+
 		Link link = new Link("link-plans set this year") {
 			@Override
 			public void onClick() {
@@ -47,13 +54,6 @@ public class MenuPanel extends Panel {
 			}
 		});
 
-		add(new Link("link-statistics") {
-			@Override
-			public void onClick() {
-				setResponsePage(new PlanSetPage());
-			}
-		});
-
 		add(new Link("link-competition") {
 			@Override
 			public void onClick() {
@@ -61,12 +61,14 @@ public class MenuPanel extends Panel {
 			}
 		});
 
-		add(new Link("link-registration") {
+		Link registrationLink = new Link("link-registration") {
 			@Override
 			public void onClick() {
 				setResponsePage(new RegistrationPage(new Enrolee()));
 			}
-		});
+		};
+		registrationLink.setVisible(!AuthorizedSession.get().isSignedIn());
+		add(registrationLink);
 
 		Link linkLogin = new Link("link-login") {
 			@Override
